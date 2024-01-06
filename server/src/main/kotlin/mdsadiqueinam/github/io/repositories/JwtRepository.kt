@@ -4,6 +4,8 @@ import mdsadiqueinam.github.io.models.User
 import org.koin.core.annotation.Single
 
 @Single
-expect class JwtRepository {
-    suspend fun validate(token: String): User?
+class JwtRepository : Repository() {
+    suspend fun validate(token: String): User? {
+        TODO("Not yet implemented")
+    }
 }

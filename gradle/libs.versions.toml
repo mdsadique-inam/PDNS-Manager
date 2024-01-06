@@ -74,7 +74,8 @@ ktor-server = [
     "ktor-server-resources"
 ]
 koin = [
-    "koin-core",
+    "koin-ktor",
+    "koin-logger",
     "koin-annotations"
 ]
 exposed = [
