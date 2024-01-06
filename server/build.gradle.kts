@@ -1,3 +1,5 @@
+import io.ktor.plugin.features.*
+
 plugins {
     alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.ktor)
@@ -12,6 +14,13 @@ version = "1.0.0"
 application {
     mainClass.set("mdsadiqueinam.github.io.ApplicationKt")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["development"] ?: "false"}")
+}
+
+kotlin {
+    jvmToolchain {
+        languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_20.toString())
+        vendor = JvmVendorSpec.AZUL
+    }
 }
 
 dependencies {
