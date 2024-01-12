@@ -82,6 +82,7 @@ class TSIGKeys(val parent: Servers.Id) {
          * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
          * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
          *
+         *  @param parent The [TSIGKeys.Id] instance.
          */
         @Resource("")
         class Delete(val parent: Id)

@@ -6,46 +6,50 @@ import kotlinx.serialization.Serializable
 /**
  * Represents a DNS zone.
  *
- * @property id Opaque zone id (string), assigned by the server, should not be interpreted by the application. Guaranteed to be safe for embedding in URLs.
- * @property name Name of the zone (e.g. “example.com.”) MUST have a trailing dot
- * @property type Set to “Zone”
+ * @property id The application should not interpret opaque zone id (string), assigned by the server.
+ * Guaranteed to be safe for embedding in URLs.
+ * @property name Name of the zone (e.g. 'example.com.') MUST have a trailing dot
+ * @property type Set to 'Zone'
  * @property url API endpoint for this zone
- * @property kind Zone kind, one of “Native”, “Master”, “Slave”, “Producer”, “Consumer”
+ * @property kind Zone kind, one of 'Native', 'Master', 'Slave', 'Producer', 'Consumer'
  * @property rrsets RRSets in this zone (for zones/{zone_id} endpoint only; omitted during GET on the …/zones list endpoint)
  * @property serial The SOA serial number
  * @property notifiedSerial The SOA serial notifications have been sent out for
  * @property editedSerial The SOA serial as seen in query responses.
  * Calculated using the SOA-EDIT metadata, default-soa-edit and default-soa-edit-signed settings
- * @property masters List of IP addresses configured as a master for this zone (“Slave” type zones only)
- * @property dnssec Whether or not this zone is DNSSEC signed
+ * @property masters List of IP addresses configured as a master for this zone ('Slave' type zones only)
+ * @property dnssec Whether this zone is DNSSEC signed
  * (inferred from presigned being true XOR presence of at least one cryptokey with active being true)
  * @property nsec3param The NSEC3PARAM record
- * @property nsec3narrow Whether or not the zone uses NSEC3 narrow
- * @property presigned Whether or not the zone is pre-signed
+ * @property nsec3narrow Whether the zone uses NSEC3 narrow
+ * @property presigned Whether the zone is pre-signed
  * @property soaEdit The SOA-EDIT metadata item
  * @property soaEditApi The SOA-EDIT-API metadata item
- * @property apiRectify Whether or not the zone will be rectified on data changes via the API
+ * @property apiRectify Whether the zone will be rectified on data changes via the API
  * @property zone MAY contain a BIND-style zone file when creating a zone
  * @property catalog The catalog this zone is a member of
  * @property account MAY be set. Its value is defined by local policy
- * @property nameservers MAY be sent in client bodies during creation, and MUST NOT be sent by the server. Simple list of strings of nameserver names, including the trailing dot. Not required for slave zones.
+ * @property nameservers MAY be sent in client bodies during creation, and MUST NOT be sent by the server.
+ * Simple list of nameserver names, including the trailing dot.
+ * Not required for slave zones.
  * @property masterTsigKeyIds The id of the TSIG keys used for master operation in this zone
  * @property slaveTsigKeyIds The id of the TSIG keys used for slave operation in this zone
  */
 @Serializable
 data class Zone(
     /**
-     * Opaque zone id (string), assigned by the server, should not be interpreted by the application. Guaranteed to be safe for embedding in URLs.
+     * The application should not interpret opaque zone id (string), assigned by the server.
+     * Guaranteed to be safe for embedding in URLs.
      */
     val id: String,
 
     /**
-     * Name of the zone (e.g. “example.com.”) MUST have a trailing dot
+     * Name of the zone (e.g. 'example.com.') MUST have a trailing dot
      */
     val name: String,
 
     /**
-     *  Set to “Zone”
+     *  Set to 'Zone'
      */
     val type: String,
 
@@ -55,9 +59,9 @@ data class Zone(
     val url: String,
 
     /**
-     * Zone kind, one of “Native”, “Master”, “Slave”, “Producer”, “Consumer”
+     * Zone kind, one of 'Native', 'Master', 'Slave', 'Producer', 'Consumer'
      */
-    val king: String,
+    val kind: String,
 
     /**
      * RRSets in this zone (for zones/{zone_id} endpoint only; omitted during GET on the …/zones list endpoint)
@@ -81,12 +85,13 @@ data class Zone(
     @SerialName("edited_serial") val editedSerial: Int,
 
     /**
-     * List of IP addresses configured as a master for this zone (“Slave” type zones only)
+     * List of IP addresses configured as a master for this zone ('Slave' type zones only)
      */
     val masters: List<String>,
 
     /**
-     * Whether or not this zone is DNSSEC signed (inferred from presigned being true XOR presence of at least one cryptokey with active being true)
+     * Whether this zone is DNSSEC signed
+     * (inferred from presigned being true XOR presence of at least one cryptokey with active being true)
      */
     val dnssec: Boolean,
 
@@ -96,12 +101,12 @@ data class Zone(
     val nsec3param: String,
 
     /**
-     * Whether or not the zone uses NSEC3 narrow
+     * Whether the zone uses NSEC3 narrow
      */
     val nsec3narrow: Boolean,
 
     /**
-     * Whether or not the zone is pre-signed
+     * Whether the zone is pre-signed
      */
     val presigned: Boolean,
 
@@ -116,7 +121,7 @@ data class Zone(
     @SerialName("soa_edit_api") val soaEditApi: String,
 
     /**
-     * Whether or not the zone will be rectified on data changes via the API
+     * Whether the zone will be rectified on data changes via the API
      */
     @SerialName("api_rectify") val apiRectify: Boolean,
 
@@ -137,7 +142,7 @@ data class Zone(
 
     /**
      * MAY be sent in client bodies during creation, and MUST NOT be sent by the server.
-     * Simple list of strings of nameserver names, including the trailing dot.
+     * Simple list of nameserver names, including the trailing dot.
      * Not required for slave zones.
      */
     val nameservers: List<String>,
@@ -178,17 +183,17 @@ data class Zone(
 @Serializable
 data class RRSet(
     /**
-     * Name for record set (e.g. “www.powerdns.com.”)
+     * Name for a record set (e.g. 'www.powerdns.com.')
      */
     val name: String,
 
     /**
-     * Type of this record (e.g. “A”, “PTR”, “MX”) MUST be uppercase
+     * The Type of this record (e.g. 'A', 'PTR', 'MX') MUST be uppercase
      */
     val type: String,
 
     /**
-     * DNS TTL of the records, in seconds. MUST NOT be included when changetype is set to “DELETE”.
+     * DNS TTL of the records, in seconds. MUST NOT be included when changetype is set to 'DELETE'.
      */
     val ttl: Int,
 
@@ -196,10 +201,10 @@ data class RRSet(
      * MUST be added when updating the RRSet.
      * Must be REPLACE or DELETE.
      * With DELETE, all existing RRs matching name and type will be deleted, including all comments.
-     * With REPLACE: when records is present, all existing RRs matching name and type will be deleted,
+     * With REPLACE: when records are present, all existing RRs matching name and type will be deleted,
      * and then new records given in records will be created.
      * If no records are left, any existing comments will be deleted as well.
-     * When comments is present, all existing comments for the RRs matching name and type will be deleted,
+     * When comments are present, all existing comments for the RRs matching name and type will be deleted,
      * and then new comments given in comments will be created.
      */
     val changetype: String,
@@ -216,7 +221,7 @@ data class RRSet(
      * List of Comment.
      * Must be empty when changetype is set to DELETE.
      * An empty list results in deletion of all comments.
-     * modified_at is optional and defaults to the current server time.
+     * Modified_at is optional and defaults to the current server time.
      */
     val comments: List<Comment>,
 )
@@ -225,7 +230,7 @@ data class RRSet(
  * Represents a record with its content and disabled status.
  *
  * @property content The content of this record.
- * @property disabled Whether or not this record is disabled. When unset, the record is not disabled.
+ * @property disabled Whether this record is disabled. When unset, the record is not disabled.
  */
 @Serializable
 data class Record(
@@ -235,7 +240,7 @@ data class Record(
     val content: String,
 
     /**
-     * Whether or not this record is disabled. When unset, the record is not disabled
+     * Whether this record is disabled. When unset, the record is not disabled
      */
     val disabled: Boolean,
 )
