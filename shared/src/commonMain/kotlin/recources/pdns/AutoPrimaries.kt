@@ -28,6 +28,8 @@ class AutoPrimaries(val parent: Servers.Id) {
      * * 404 Not Found – Requested item was not found Returns: [models.pdns.Error] object
      * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
      * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
+     *
+     * @param parent The [AutoPrimaries] instance.
      */
     @Resource("")
     class Post(val parent: AutoPrimaries)
