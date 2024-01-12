@@ -30,6 +30,7 @@ ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
 # Ktor client
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
 
 # Ktor Server
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
@@ -63,6 +64,11 @@ koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-ks
 
 
 [bundles]
+ktor-client = [
+    "ktor-client-core",
+    "ktor-client-cio",
+    "ktor-client-resources"
+]
 ktor-server = [
     "ktor-server-core",
     "ktor-server-cors",
