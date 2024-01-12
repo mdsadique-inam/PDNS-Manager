@@ -46,14 +46,14 @@ class TSIGKeys(val parent: Servers.Id) {
      * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
      *
      * @param parent The [TSIGKeys] instance.
-     * @param id The ID of the TSIGKey to retrieve.
+     * @param tsigKeyId The ID of the TSIGKey to retrieve.
      */
-    @Resource("{id}")
-    class Id(val parent: TSIGKeys, val id: String) {
+    @Resource("{tsigKeyId}")
+    class Id(val parent: TSIGKeys, val tsigKeyId: String) {
 
         /**
-         * The TSIGKey at id can be changed in multiple ways:
-         * * Changing the Name, this will remove the key with id after adding.
+         * The TSIGKey at tsigKeyId can be changed in multiple ways:
+         * * Changing the Name, this will remove the key with tsigKeyId after adding.
          * * Changing the Algorithm
          * * Changing the Key
          *
@@ -73,7 +73,7 @@ class TSIGKeys(val parent: Servers.Id) {
         class Put(val parent: Id)
 
         /**
-         * Delete the TSIGKey with id
+         * Delete the TSIGKey with tsigKeyId
          *
          * Responses:
          * * 204 No Content – OK, key was deleted

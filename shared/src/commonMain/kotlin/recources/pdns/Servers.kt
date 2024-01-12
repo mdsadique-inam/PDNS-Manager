@@ -29,6 +29,6 @@ class Servers {
      * @param parent The parent servers.
      * @param id The ID of the server to retrieve.
      */
-    @Resource("{id}")
-    class Id(val parent: Servers = Servers(), val id: String)
+    @Resource("{serverId}")
+    class Id(val parent: Servers = Servers(), val serverId: String)
 }

@@ -48,10 +48,10 @@ class Cryptokeys(val parent: Zones.Id) {
      * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
      *
      * @param parent The [Cryptokeys] instance.
-     * @param id The ID of the cryptokey to retrieve.
+     * @param cryptokeyId The ID of the cryptokey to retrieve.
      */
-    @Resource("{id}")
-    class Id(val parent: Cryptokeys, val id: String) {
+    @Resource("{cryptokeyId}")
+    class Id(val parent: Cryptokeys, val cryptokeyId: String) {
 
         /**
          * This method (de)activates a key from zone_name specified by cryptokey_id.

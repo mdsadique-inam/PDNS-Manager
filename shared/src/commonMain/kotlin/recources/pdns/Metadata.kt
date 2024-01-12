@@ -48,7 +48,7 @@ class Metadata(val parent: Zones.Id) {
      * @param kind The kind of metadata to retrieve.
      */
     @Resource("{kind}")
-    class Id(val parent: Metadata, val kind: String) {
+    class Kind(val parent: Metadata, val kind: String) {
 
         /**
          * Replace the content of a single kind of domain metadata.
@@ -62,10 +62,10 @@ class Metadata(val parent: Zones.Id) {
          * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
          * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
          *
-         * @param parent The [Metadata.Id] instance.
+         * @param parent The [Metadata.Kind] instance.
          */
         @Resource("")
-        class Put(val parent: Id)
+        class Put(val parent: Kind)
 
         /**
          * Delete all items of a single kind of domain metadata.
@@ -77,9 +77,9 @@ class Metadata(val parent: Zones.Id) {
          * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
          * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
          *
-         * @param parent The [Metadata.Id] instance.
+         * @param parent The [Metadata.Kind] instance.
          */
         @Resource("")
-        class Delete(val parent: Id)
+        class Delete(val parent: Kind)
     }
 }

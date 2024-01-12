@@ -66,15 +66,12 @@ class Zones(val parent: Servers.Id) {
      * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
      *
      * @param parent The Zones instance that this Id resource belongs to.
-     * @param id The ID of the zone to retrieve.
-     * @param rrsets whether to include the “rrsets” in the response Zone object.
-     * @param rrsetName Limit output to RRsets for this name.
-     * @param rrsetType Limit output to the RRset of this type. Can only be used together with rrsetName.
+     * @param zoneId The ID of the zone to retrieve.
      */
-    @Resource("{id}")
+    @Resource("{zoneId}")
     class Id(
         val parent: Zones,
-        val id: String,
+        val zoneId: String,
     ) {
 
         /**
