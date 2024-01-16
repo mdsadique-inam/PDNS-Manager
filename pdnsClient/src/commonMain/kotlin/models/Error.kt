@@ -1,4 +1,4 @@
-package models.pdns
+package models
 
 import kotlinx.serialization.Serializable
 

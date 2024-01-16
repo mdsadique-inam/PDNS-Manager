@@ -22,4 +22,5 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":server")
+include(":pdnsClient")
 include(":shared")

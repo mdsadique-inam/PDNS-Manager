@@ -1,4 +1,4 @@
-package recources.pdns
+package resources
 
 import io.ktor.resources.*
 import kotlinx.serialization.SerialName
@@ -96,7 +96,7 @@ class Zones(val parent: Servers.Id) {
          */
         @Resource("")
         class Get(
-            val parent: Zones.Id,
+            val parent: Id,
             val rrsets: Boolean? = null,
             @SerialName("rrset_name") val rrsetName: String? = null,
             @SerialName("rrset_type") val rrsetType: String? = null

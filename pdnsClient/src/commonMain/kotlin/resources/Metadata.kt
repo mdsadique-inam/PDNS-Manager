@@ -1,12 +1,12 @@
-package recources.pdns
+package resources
 
 import io.ktor.resources.*
 
 /**
- * Get all CryptoKeys for a zone, except the privatekey
+ * Get all the Metadata associated with the zone.
  *
  * Responses:
- * * 200 OK – List of Cryptokey objects Returns: array of [models.pdns.Cryptokey] objects
+ * * 200 OK – List of Metadata objects Returns: array of [models.pdns.Metadata] objects
  * * 400 Bad Request – The supplied request was not valid Returns: [models.pdns.Error] object
  * * 404 Not Found – Requested item was not found Returns: [models.pdns.Error] object
  * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
@@ -14,47 +14,61 @@ import io.ktor.resources.*
  *
  * @param parent The [Zones.Id] instance.
  */
-@Resource("cryptokeys")
-class Cryptokeys(val parent: Zones.Id) {
+@Resource("metadata")
+class Metadata(val parent: Zones.Id) {
 
     /**
-     * Creates a Cryptokey
+     * Creates a set of metadata entries
      *
-     * This method adds a new key to a zone. The key can either be generated or imported by supplying the content parameter.
-     * if content, bits and algo are null,
-     * a key will be generated based on the default-ksk-algorithm and default-ksk-size settings for a KSK and
-     * the default-zsk-algorithm and default-zsk-size options for a ZSK.
+     * Creates a set of metadata entries of given kind for the zone. Existing metadata entries for the zone with the same kind are not overwritten.
      *
      * Responses:
-     * * 201 Created – Created Returns: [models.pdns.Cryptokey] object
+     * * 204 No Content – OK
      * * 400 Bad Request – The supplied request was not valid Returns: [models.pdns.Error] object
      * * 404 Not Found – Requested item was not found Returns: [models.pdns.Error] object
      * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
      * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
      *
-     * @param parent The [Cryptokeys] instance.
+     * @param parent The [Metadata] instance.
      */
     @Resource("")
-    class Post(val parent: Cryptokeys)
+    class Post(val parent: Metadata)
 
     /**
-     * Returns all data about the CryptoKey, including the privatekey.
+     * Get the content of a single kind of domain metadata as a Metadata object.
      *
      * Responses:
-     * * 200 OK – Cryptokey Returns: [models.pdns.Cryptokey] object
+     * * 200 OK – Metadata object with list of values Returns: [models.pdns.Metadata] object
      * * 400 Bad Request – The supplied request was not valid Returns: [models.pdns.Error] object
      * * 404 Not Found – Requested item was not found Returns: [models.pdns.Error] object
      * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
      * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
      *
-     * @param parent The [Cryptokeys] instance.
-     * @param cryptokeyId The ID of the cryptokey to retrieve.
+     * @param parent The [Metadata] instance.
+     * @param kind The kind of metadata to retrieve.
      */
-    @Resource("{cryptokeyId}")
-    class Id(val parent: Cryptokeys, val cryptokeyId: String) {
+    @Resource("{kind}")
+    class Kind(val parent: Metadata, val kind: String) {
 
         /**
-         * This method (de)activates a key from zone_name specified by cryptokey_id.
+         * Replace the content of a single kind of domain metadata.
+         *
+         * Creates a set of metadata entries of given kind for the zone. Existing metadata entries for the zone with the same kind are removed.
+         *
+         * Responses:
+         * * 200 OK – Metadata object with list of values Returns: [models.pdns.Metadata] object
+         * * 400 Bad Request – The supplied request was not valid Returns: [models.pdns.Error] object
+         * * 404 Not Found – Requested item was not found Returns: [models.pdns.Error] object
+         * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
+         * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
+         *
+         * @param parent The [Metadata.Kind] instance.
+         */
+        @Resource("")
+        class Put(val parent: Kind)
+
+        /**
+         * Delete all items of a single kind of domain metadata.
          *
          * Responses:
          * * 204 No Content – OK
@@ -63,10 +77,9 @@ class Cryptokeys(val parent: Zones.Id) {
          * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.pdns.Error] object
          * * 500 Internal Server Error – Internal server error Returns: [models.pdns.Error] object
          *
-         * @param parent The [Cryptokeys.Id] instance.
+         * @param parent The [Metadata.Kind] instance.
          */
         @Resource("")
-        class Put(val parent: Id)
+        class Delete(val parent: Kind)
     }
-
 }

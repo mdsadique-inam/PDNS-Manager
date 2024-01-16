@@ -1,6 +1,7 @@
-package recources.pdns
+package resources
 
 import io.ktor.resources.*
+import resources.Servers
 
 /**
  * Query statistics.

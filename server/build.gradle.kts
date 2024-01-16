@@ -25,16 +25,17 @@ kotlin {
 
 dependencies {
     implementation(projects.shared)
+    implementation(projects.pdnsClient)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.logback)
     implementation(libs.bundles.ktor.server)
-    implementation(libs.bundles.ktor.client)
     implementation(libs.bundles.koin)
     add("ksp", libs.koin.ksp)
     implementation(libs.postgresql)
     implementation(libs.bundles.exposed)
 
     testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.ktor.server.tests)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.koin.test)

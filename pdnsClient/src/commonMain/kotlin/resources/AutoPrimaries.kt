@@ -1,4 +1,4 @@
-package recources.pdns
+package resources
 
 import io.ktor.resources.*
 
