@@ -1,29 +1,22 @@
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.serialization)
 }
 
 kotlin {
-
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser()
-    }
     jvm()
     applyDefaultHierarchyTemplate()
-
     sourceSets {
         commonMain.dependencies {
             // put your Multiplatform dependencies here
             implementation(libs.bundles.ktor.client)
             implementation(libs.kotlinx.serialization.core)
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.client.cio)
         }
-        val wasmJsMain by getting {
-            dependencies {
-                implementation(libs.bundles.ktor.client.wasm)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

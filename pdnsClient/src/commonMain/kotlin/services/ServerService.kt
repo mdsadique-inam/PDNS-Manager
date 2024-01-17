@@ -25,6 +25,3 @@ class ServerService(private val client: HttpClient) {
         }
     }
 }
-
-
-class PDNSClientException(error: Error) : Throwable(error.error)
