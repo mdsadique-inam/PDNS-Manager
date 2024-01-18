@@ -18,6 +18,10 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.kotlinx.coroutines.test)
         }
+        jvmMain.dependencies {
+            // put your JVM dependencies here
+            implementation(libs.logback)
+        }
     }
 }
 

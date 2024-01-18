@@ -2,6 +2,23 @@ package models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
+/**
+ * Enumeration representing different kinds of zones.
+ * Each ZoneKind has a corresponding type.
+ *
+ * @property type The type of the ZoneKind.
+ */
+@Serializable
+enum class ZoneKind {
+    @SerialName("Native") NATIVE,
+    @SerialName("Master") MASTER,
+    @SerialName("Slave") SLAVE,
+    @SerialName("Producer") PRODUCER,
+    @SerialName("Consumer") CONSUMER
+}
 
 /**
  * Represents a DNS zone.
@@ -59,9 +76,9 @@ data class Zone(
     val url: String,
 
     /**
-     * Zone kind, one of 'Native', 'Master', 'Slave', 'Producer', 'Consumer'
+     * Zone kind, one of [ZoneKind]
      */
-    val kind: String,
+    val kind: ZoneKind,
 
     /**
      * RRSets in this zone (for zones/{zone_id} endpoint only; omitted during GET on the …/zones list endpoint)

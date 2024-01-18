@@ -36,7 +36,11 @@ class Zones(val parent: Servers.Id) {
      * Setting this to “false” will make the query a lot faster.
      */
     @Resource("")
-    class Get(val parent: Zones, val zone: String? = null, val dnssec: Boolean? = null)
+    class Get(val parent: Zones, val zone: String? = null, val dnssec: Boolean? = null) {
+        constructor(serverId: String, zone: String? = null, dnssec: Boolean? = null) : this(
+            Zones(Servers.Id(serverId)), zone, dnssec
+        )
+    }
 
     /**
      * Creates a new domain, returns the Zone on creation.

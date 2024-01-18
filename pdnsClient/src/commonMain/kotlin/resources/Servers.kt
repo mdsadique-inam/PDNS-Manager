@@ -30,5 +30,7 @@ class Servers {
      * @param id The ID of the server to retrieve.
      */
     @Resource("{serverId}")
-    class Id(val parent: Servers = Servers(), val serverId: String)
+    class Id(val parent: Servers = Servers(), val serverId: String) {
+        constructor(serverId: String) : this(Servers(), serverId)
+    }
 }

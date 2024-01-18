@@ -14,6 +14,7 @@ logback = "1.4.14"
 koin = "3.5.3"
 koin-ksp = "1.3.0"
 ksp = "1.9.22-1.0.16"
+napier = "2.7.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -34,6 +35,8 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 # Ktor client wasm
 ktor-client-core-wasm = { module = "io.ktor:ktor-client-core", version.ref = "ktor-wasm" }
@@ -78,6 +81,8 @@ ktor-client = [
     "ktor-client-resources",
     "ktor-client-content-negotiation",
     "ktor-serialization-kotlinx-json",
+    "ktor-client-logging",
+    "napier"
 ]
 ktor-client-wasm = [
     "ktor-client-core-wasm",
