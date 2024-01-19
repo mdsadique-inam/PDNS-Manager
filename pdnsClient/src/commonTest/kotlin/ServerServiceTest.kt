@@ -2,16 +2,17 @@ import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import kotlinx.coroutines.test.runTest
 import exceptions.PDNSClientException
+import kotlinx.serialization.json.Json
 import services.ServerService
 import kotlin.test.Test
+import kotlin.test.assertTrue
 
 class ServerServiceTest {
 
     private val client = PDNSClient.createHttpClient {
         defaultRequest {
-            host = "localhost"
-            port = 8081
-            header("X-API-Key", "changeme")
+            url("http://localhost:8081/api/v1/")
+            header("X-API-Key", "secret")
         }
     }
     private val serverService = ServerService(client)
@@ -19,12 +20,12 @@ class ServerServiceTest {
     @Test
     fun fetchServer() = runTest {
         val result = serverService.fetchServers()
-        result.exceptionOrNull()?.let {
-            when(it) {
-                is PDNSClientException -> println(it.error)
-                else -> println(it)
-            }
-        }
-        println(result)
+        assertTrue(result.isSuccess)
+    }
+
+    @Test
+    fun fetchServerWithId() = runTest {
+        val result = serverService.fetchServer("localhost")
+        assertTrue(result.isSuccess)
     }
 }
