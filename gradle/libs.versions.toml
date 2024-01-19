@@ -35,6 +35,7 @@ ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
@@ -43,6 +44,8 @@ ktor-client-core-wasm = { module = "io.ktor:ktor-client-core", version.ref = "kt
 ktor-client-resources-wasm = { module = "io.ktor:ktor-client-resources", version.ref = "ktor-wasm" }
 ktor-client-content-negotiation-wasm = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-wasm" }
 ktor-serialization-kotlinx-json-wasm = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-wasm" }
+ktor-client-js-wasm = { module = "io.ktor:ktor-client-js", version.ref = "ktor-wasm" }
+ktor-client-logging-wasm = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-wasm" }
 
 # Ktor Server
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
@@ -82,13 +85,14 @@ ktor-client = [
     "ktor-client-content-negotiation",
     "ktor-serialization-kotlinx-json",
     "ktor-client-logging",
-    "napier"
 ]
 ktor-client-wasm = [
     "ktor-client-core-wasm",
+    "ktor-client-js-wasm",
     "ktor-client-resources-wasm",
     "ktor-client-content-negotiation-wasm",
-    "ktor-serialization-kotlinx-json-wasm"
+    "ktor-serialization-kotlinx-json-wasm",
+    "ktor-client-logging-wasm"
 ]
 ktor-server = [
     "ktor-server-core",
