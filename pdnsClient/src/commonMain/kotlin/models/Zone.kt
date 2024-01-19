@@ -20,6 +20,14 @@ enum class ZoneKind {
     @SerialName("Consumer") CONSUMER
 }
 
+@Serializable
+enum class SOAEditApi {
+    DEFAULT,
+    INCREASE,
+    EPOCH,
+    @SerialName("") OFF
+}
+
 /**
  * Represents a DNS zone.
  *
@@ -68,7 +76,7 @@ data class Zone(
     /**
      *  Set to 'Zone'
      */
-    val type: String,
+    val type: String = "Zone",
 
     /**
      * API endpoint for this zone
@@ -83,7 +91,7 @@ data class Zone(
     /**
      * RRSets in this zone (for zones/{zone_id} endpoint only; omitted during GET on the …/zones list endpoint)
      */
-    val rrsets: List<RRSet>,
+    val rrsets: List<RRSet>? = null,
 
     /**
      *  The SOA serial number
@@ -93,7 +101,7 @@ data class Zone(
     /**
      * The SOA serial notifications have been sent out for
      */
-    @SerialName("notified_serial") val notifiedSerial: Int,
+    @SerialName("notified_serial") val notifiedSerial: Int? = null,
 
     /**
      * The SOA serial as seen in query responses.
@@ -115,42 +123,42 @@ data class Zone(
     /**
      * The NSEC3PARAM record
      */
-    val nsec3param: String,
+    val nsec3param: String? = null,
 
     /**
      * Whether the zone uses NSEC3 narrow
      */
-    val nsec3narrow: Boolean,
+    val nsec3narrow: Boolean? = null,
 
     /**
      * Whether the zone is pre-signed
      */
-    val presigned: Boolean,
+    val presigned: Boolean? = null,
 
     /**
      * The SOA-EDIT metadata item
      */
-    @SerialName("soa_edit") val soaEdit: String,
+    @SerialName("soa_edit") val soaEdit: String? = null,
 
     /**
      * The SOA-EDIT-API metadata item
      */
-    @SerialName("soa_edit_api") val soaEditApi: String,
+    @SerialName("soa_edit_api") val soaEditApi: SOAEditApi? = null,
 
     /**
      * Whether the zone will be rectified on data changes via the API
      */
-    @SerialName("api_rectify") val apiRectify: Boolean,
+    @SerialName("api_rectify") val apiRectify: Boolean? = null,
 
     /**
      * MAY contain a BIND-style zone file when creating a zone
      */
-    val zone: String,
+    val zone: String? = null,
 
     /**
      * The catalog this zone is a member of
      */
-    val catalog: String,
+    val catalog: String? = null,
 
     /**
      * MAY be set. Its value is defined by local policy
@@ -162,18 +170,54 @@ data class Zone(
      * Simple list of nameserver names, including the trailing dot.
      * Not required for slave zones.
      */
-    val nameservers: List<String>,
+    val nameservers: List<String>? = null,
 
     /**
      * The id of the TSIG keys used for master operation in this zone
      */
-    @SerialName("master_tsig_key_ids") val masterTsigKeyIds: List<String>,
+    @SerialName("master_tsig_key_ids") val masterTsigKeyIds: List<String>? = null,
 
     /**
      * The id of the TSIG keys used for slave operation in this zone
      */
-    @SerialName("slave_tsig_key_ids") val slaveTsigKeyIds: List<String>,
-)
+    @SerialName("slave_tsig_key_ids") val slaveTsigKeyIds: List<String>? = null,
+) {
+    constructor(
+        name: String,
+        kind: ZoneKind = ZoneKind.NATIVE,
+        account: String = "",
+        nameservers: List<String> = emptyList(),
+        masters: List<String> = emptyList(),
+        dnssec: Boolean = true,
+        soaEditApi: SOAEditApi = SOAEditApi.DEFAULT,
+        apiRectify: Boolean = false,
+        zone: String? = null,
+        catalog: String? = null,
+        masterTsigKeyIds: List<String>? = null,
+        slaveTsigKeyIds: List<String>? = null,
+    ) : this(
+        id = "",
+        name = name,
+        type = "Zone",
+        url = "",
+        kind = kind,
+        serial = 0,
+        notifiedSerial = null,
+        editedSerial = 0,
+        masters = masters,
+        dnssec = dnssec,
+        presigned = null,
+        soaEdit = "",
+        soaEditApi = soaEditApi,
+        apiRectify = apiRectify,
+        zone = zone,
+        catalog = catalog,
+        account = account,
+        nameservers = nameservers,
+        masterTsigKeyIds = masterTsigKeyIds,
+        slaveTsigKeyIds = slaveTsigKeyIds,
+    )
+}
 
 /**
  * Represents a DNS Resource Record Set (RRSet).

@@ -2,6 +2,8 @@ package resources
 
 import io.ktor.resources.*
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import models.ZoneKind
 
 /**
  * List all Zones in a server.
@@ -56,7 +58,9 @@ class Zones(val parent: Servers.Id) {
      * @property rrsets The rrsets flag. whether to include the “rrsets” in the response Zone object.
      */
     @Resource("")
-    class Post(val parent: Zones, val rrsets: Boolean? = null)
+    class Post(val parent: Zones, val rrsets: Boolean? = null) {
+        constructor(serverId: String, rrsets: Boolean? = null) : this(Zones(Servers.Id(serverId)), rrsets)
+    }
 
     /**
      * Get the zone managed by a server
