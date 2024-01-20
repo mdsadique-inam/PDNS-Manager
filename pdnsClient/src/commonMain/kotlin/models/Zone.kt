@@ -266,7 +266,7 @@ data class RRSet(
      * When comments are present, all existing comments for the RRs matching name and type will be deleted,
      * and then new comments given in comments will be created.
      */
-    val changetype: String,
+    val changetype: String? = null,
 
     /**
      * All records in this RRSet.

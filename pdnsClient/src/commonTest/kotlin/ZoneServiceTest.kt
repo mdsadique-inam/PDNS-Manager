@@ -34,4 +34,21 @@ class ZoneServiceTest {
         val result = zoneService.createZone("localhost", zone)
         assertTrue(result.isSuccess)
     }
+
+    @Test
+    fun fetchZone() = runTest {
+        val result = zoneService.fetchZone("localhost", "sadique.dev.")
+        assertTrue(result.isSuccess)
+    }
+
+    @Test
+    fun updateZone() = runTest {
+        val zone = Zone(
+            name = "sadique.dev.",
+            nameservers = listOf("ns1.sadique.dev.", "ns2.sadique.dev."),
+            id = "sadique.dev.",
+        )
+        val result = zoneService.updateZone("localhost", zone)
+        assertTrue(result.isSuccess)
+    }
 }

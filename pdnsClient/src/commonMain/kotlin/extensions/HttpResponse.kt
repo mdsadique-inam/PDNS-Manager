@@ -9,6 +9,9 @@ import exceptions.PDNSClientException
 suspend inline fun <reified T> HttpResponse.process(): Result<T> {
     return when (status.value) {
         in 200..299 -> {
+            if (T::class == Unit::class) {
+                return Result.success(Unit as T)
+            }
             val body = this.body<T>()
             Result.success(body)
         }
