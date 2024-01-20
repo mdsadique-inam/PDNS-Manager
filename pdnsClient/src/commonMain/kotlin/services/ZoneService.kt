@@ -4,6 +4,8 @@ import extensions.process
 import io.ktor.client.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
+import models.PatchRRSets
+import models.RRSet
 import models.Zone
 import resources.Zones
 
@@ -139,11 +141,13 @@ class ZoneService(private val client: HttpClient) {
      * * 500 Internal Server Error – Internal server error Returns: [models.Error] object
      *
      * @param serverId The server id
-     * @param zone The zone to update, the zone id must be set and RRsets must be set
+     * @param zoneId The zone id
+     * @param rrSets The list of RRsets to patch
      */
-    suspend fun patchRRSets(serverId: String, zone: Zone): Result<Unit> = runCatching {
-        val response = client.patch(Zones.Id(serverId, zone.id)) {
-            setBody(zone)
+    suspend fun patchRRSets(serverId: String, zoneId: String, rrsets: List<RRSet>): Result<Unit> = runCatching {
+        val body = PatchRRSets(rrsets)
+        val response = client.patch(Zones.Id(serverId, zoneId)) {
+            setBody(body)
         }
         return response.process()
     }

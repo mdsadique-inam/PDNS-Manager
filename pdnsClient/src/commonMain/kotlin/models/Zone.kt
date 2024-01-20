@@ -217,6 +217,59 @@ data class Zone(
     )
 }
 
+@Serializable
+data class PatchRRSets(
+    val rrsets: List<RRSet>
+)
+
+enum class RRSetType {
+    A,
+    AAAA,
+    AFSDB,
+    ALIAS,
+    APL,
+    CAA,
+    CDNSKEY,
+    CDS,
+    CERT,
+    CNAME,
+    DHCID,
+    DLV,
+    DNAME,
+    DNSKEY,
+    DS,
+    HINFO,
+    IPSECKEY,
+    KEY,
+    KX,
+    LOC,
+    MX,
+    NAPTR,
+    NS,
+    NSEC,
+    NSEC3,
+    NSEC3PARAM,
+    PTR,
+    RRSIG,
+    RP,
+    SIG,
+    SOA,
+    SPF,
+    SRV,
+    SSHFP,
+    TA,
+    TKEY,
+    TLSA,
+    TSIG,
+    TXT,
+    URI,
+}
+
+enum class ChangeType {
+    REPLACE,
+    DELETE
+}
+
 /**
  * Represents a DNS Resource Record Set (RRSet).
  *
@@ -249,7 +302,7 @@ data class RRSet(
     /**
      * The Type of this record (e.g. 'A', 'PTR', 'MX') MUST be uppercase
      */
-    val type: String,
+    val type: RRSetType,
 
     /**
      * DNS TTL of the records, in seconds. MUST NOT be included when changetype is set to 'DELETE'.
@@ -266,7 +319,7 @@ data class RRSet(
      * When comments are present, all existing comments for the RRs matching name and type will be deleted,
      * and then new comments given in comments will be created.
      */
-    val changetype: String? = null,
+    val changetype: ChangeType? = null,
 
     /**
      * All records in this RRSet.

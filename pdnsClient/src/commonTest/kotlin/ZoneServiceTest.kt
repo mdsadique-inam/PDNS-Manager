@@ -3,7 +3,7 @@ import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.test.runTest
-import models.Zone
+import models.*
 import services.ZoneService
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -42,13 +42,27 @@ class ZoneServiceTest {
     }
 
     @Test
-    fun updateZone() = runTest {
-        val zone = Zone(
-            name = "sadique.dev.",
-            nameservers = listOf("ns1.sadique.dev.", "ns2.sadique.dev."),
-            id = "sadique.dev.",
+    fun addRecord() = runTest {
+        val rrsets = listOf(
+            RRSet(
+                name = "test.sadique.dev.",
+                type = RRSetType.A,
+                ttl = 3600,
+                changetype = ChangeType.REPLACE,
+                records = listOf(Record(
+                    "192.168.29.70",
+                    false
+                )),
+                comments = emptyList()
+            )
         )
-        val result = zoneService.updateZone("localhost", zone)
+        val result = zoneService.patchRRSets("localhost", "sadique.dev.", rrsets)
+        assertTrue(result.isSuccess)
+    }
+
+    @Test
+    fun deleteZone() = runTest {
+        val result = zoneService.deleteZone("localhost", "sadique.dev.")
         assertTrue(result.isSuccess)
     }
 }
