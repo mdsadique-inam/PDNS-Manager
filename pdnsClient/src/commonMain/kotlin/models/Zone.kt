@@ -103,7 +103,7 @@ data class Zone(
     val kind: ZoneKind,
     val rrsets: List<RRSet>? = null,
     val serial: Int,
-    @SerialName("notified_serial") val notifiedSerial: Int? = null,
+    @SerialName("notified_serial") val notifiedSerial: Int,
     @SerialName("edited_serial") val editedSerial: Int,
     val masters: List<String>,
     val dnssec: Boolean,

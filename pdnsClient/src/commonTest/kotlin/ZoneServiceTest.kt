@@ -21,7 +21,6 @@ class ZoneServiceTest {
     fun fetchZones() = runTest {
         val result = zoneService.fetchZones("localhost")
         assertTrue(result.isSuccess)
-        println(result.getOrThrow())
     }
 
     @Test
@@ -36,7 +35,7 @@ class ZoneServiceTest {
 
     @Test
     fun fetchZone() = runTest {
-        val result = zoneService.fetchZone("localhost", "sadique.dev.")
+        val result = zoneService.fetchZone("localhost", "sadique.dev.", true)
         assertTrue(result.isSuccess)
     }
 
