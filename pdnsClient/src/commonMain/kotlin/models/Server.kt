@@ -58,3 +58,9 @@ data class SearchResult(
     val type: String? = null,
     val ttl: Int? = null,
 )
+
+@Serializable
+data class CacheFlushResult(
+    val count: Int,
+    val result: String,
+)

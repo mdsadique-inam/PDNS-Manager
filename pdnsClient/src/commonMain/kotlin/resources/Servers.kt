@@ -21,4 +21,9 @@ class Servers {
     class Statistics(val parent: Id, val statistic: StatisticType? = null, val includerings: Boolean? = null) {
         constructor(serverId: String, statistic: StatisticType? = null, includerings: Boolean? = null) : this(Id(serverId), statistic, includerings)
     }
+
+    @Resource("cache/flush")
+    class cacheFlush(val parent: Id, val domain: String) {
+        constructor(serverId: String, domain: String) : this(Id(serverId), domain)
+    }
 }

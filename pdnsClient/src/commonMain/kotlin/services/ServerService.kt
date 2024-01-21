@@ -159,4 +159,9 @@ class ServerService(private val client: HttpClient) {
         val response = client.get(Servers.Statistics(Servers.Id(serverId), statistic, includerings))
         return response.process()
     }
+
+    suspend fun cacheFlush(serverId: String, domain: String): Result<CacheFlushResult> = runCatching {
+        val response = client.put(Servers.cacheFlush(serverId, domain))
+        return response.process()
+    }
 }

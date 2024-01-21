@@ -60,6 +60,11 @@ class ServerServiceTest {
     fun statistics() = runTest {
         val result = serverService.statistics("localhost")
         assertTrue(result.isSuccess)
-        println(result.getOrNull())
+    }
+
+    @Test
+    fun cacheFlush() = runTest {
+        val result = serverService.cacheFlush("localhost", "sadique.dev.")
+        assertTrue(result.isSuccess)
     }
 }
