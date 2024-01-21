@@ -16,38 +16,11 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Server(
-    /**
-     * Set to “Server”
-     */
-    val type: String,
-
-    /**
-     * The id of the server, “localhost”
-     */
+    val type: String = "Server",
     val id: String,
-
-    /**
-     * “recursor” for the PowerDNS Recursor and “authoritative” for the Authoritative Server
-     */
     @SerialName("daemon_type") val daemonType: String,
-
-    /**
-     * The version of the server software
-     */
     val version: String,
-
-    /**
-     * The API endpoint for this server
-     */
     val url: String,
-
-    /**
-     * The API endpoint for this server’s configuration
-     */
     @SerialName("config_url") val configUrl: String,
-
-    /**
-     * The API endpoint for this server’s zones
-     */
     @SerialName("zones_url") val zonesUrl: String,
 )
