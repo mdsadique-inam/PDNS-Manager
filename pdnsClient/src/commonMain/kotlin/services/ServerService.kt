@@ -128,10 +128,11 @@ class ServerService(private val client: HttpClient) {
      * @param objectType The type of object to search for.
      * @return A [Result] with the [List] of [SearchResult]s.
      */
-    suspend fun search(serverId: String, query: String, max: Int, objectType: SearchType): Result<List<SearchResult>> = runCatching {
-        val response = client.get(Servers.Search(serverId, query, max, objectType))
-        return response.process()
-    }
+    suspend fun search(serverId: String, query: String, max: Int, objectType: SearchType): Result<List<SearchResult>> =
+        runCatching {
+            val response = client.get(Servers.Search(serverId, query, max, objectType))
+            return response.process()
+        }
 
 
     /**
@@ -155,7 +156,11 @@ class ServerService(private val client: HttpClient) {
      * whether to include the Ring items, which can contain thousands of log messages or queried domains.
      * Setting this to “false” may make the response a lot smaller.
      */
-    suspend fun statistics(serverId: String, statistic: StatisticType? = null, includerings: Boolean? = null): Result<List<Statistic>> = runCatching {
+    suspend fun statistics(
+        serverId: String,
+        statistic: StatisticType? = null,
+        includerings: Boolean? = null
+    ): Result<List<Statistic>> = runCatching {
         val response = client.get(Servers.Statistics(Servers.Id(serverId), statistic, includerings))
         return response.process()
     }

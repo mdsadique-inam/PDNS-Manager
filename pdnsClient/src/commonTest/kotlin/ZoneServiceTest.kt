@@ -47,10 +47,12 @@ class ZoneServiceTest {
                 type = RRSetType.A,
                 ttl = 3600,
                 changetype = ChangeType.REPLACE,
-                records = listOf(Record(
-                    "192.168.29.70",
-                    false
-                )),
+                records = listOf(
+                    Record(
+                        "192.168.29.70",
+                        false
+                    )
+                ),
                 comments = emptyList()
             )
         )

@@ -8,9 +8,12 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class CryptokeyType {
-    @SerialName("ksk") KSK,
-    @SerialName("zsk") ZSK,
-    @SerialName("csk") CSK,
+    @SerialName("ksk")
+    KSK,
+    @SerialName("zsk")
+    ZSK,
+    @SerialName("csk")
+    CSK,
 }
 
 /**

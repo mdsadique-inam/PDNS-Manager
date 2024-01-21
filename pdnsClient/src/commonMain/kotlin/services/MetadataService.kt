@@ -89,12 +89,13 @@ class MetadataService(val client: HttpClient) {
      * @param kind The kind of metadata to retrieve.
      * @param metadata The [Metadata] object.
      */
-    suspend fun updateMetadata(serverId: String, zoneId: String, kind: String, metadata: Metadata): Result<Unit> = runCatching {
-        val response = client.put(MetadataR.Kind(serverId, zoneId, kind)) {
-            setBody(metadata)
+    suspend fun updateMetadata(serverId: String, zoneId: String, kind: String, metadata: Metadata): Result<Unit> =
+        runCatching {
+            val response = client.put(MetadataR.Kind(serverId, zoneId, kind)) {
+                setBody(metadata)
+            }
+            return response.process()
         }
-        return response.process()
-    }
 
     /**
      * Delete all items of a single kind of domain metadata.

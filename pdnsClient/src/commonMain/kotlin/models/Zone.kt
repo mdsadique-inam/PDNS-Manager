@@ -9,11 +9,16 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 enum class ZoneKind {
-    @SerialName("Native") NATIVE,
-    @SerialName("Master") MASTER,
-    @SerialName("Slave") SLAVE,
-    @SerialName("Producer") PRODUCER,
-    @SerialName("Consumer") CONSUMER
+    @SerialName("Native")
+    NATIVE,
+    @SerialName("Master")
+    MASTER,
+    @SerialName("Slave")
+    SLAVE,
+    @SerialName("Producer")
+    PRODUCER,
+    @SerialName("Consumer")
+    CONSUMER
 }
 
 @Serializable
@@ -21,7 +26,8 @@ enum class SOAEditApi {
     DEFAULT,
     INCREASE,
     EPOCH,
-    @SerialName("") OFF
+    @SerialName("")
+    OFF
 }
 
 /**

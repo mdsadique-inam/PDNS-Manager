@@ -4,10 +4,6 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
-import models.Statistic
 
 object PDNSClient {
     fun createHttpClient(block: HttpClientConfig<*>.() -> Unit): HttpClient {

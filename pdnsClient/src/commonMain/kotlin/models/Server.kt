@@ -33,7 +33,7 @@ data class Server(
  * @property account The account name for the autoprimary server.
  */
 @Serializable
-data class AutoPrimary (
+data class AutoPrimary(
     val ip: String,
     val nameserver: String,
     val account: String,
@@ -41,10 +41,14 @@ data class AutoPrimary (
 
 @Serializable
 enum class SearchType {
-    @SerialName("all") ALL,
-    @SerialName("record") RECORD,
-    @SerialName("zone") ZONE,
-    @SerialName("comment") COMMENT,
+    @SerialName("all")
+    ALL,
+    @SerialName("record")
+    RECORD,
+    @SerialName("zone")
+    ZONE,
+    @SerialName("comment")
+    COMMENT,
 }
 
 @Serializable

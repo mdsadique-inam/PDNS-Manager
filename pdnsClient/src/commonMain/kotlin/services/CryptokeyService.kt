@@ -6,7 +6,6 @@ import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
 import models.Cryptokey
 import models.CryptokeyBody
-import models.ZoneBody
 import resources.Cryptokeys
 
 class CryptokeyService(private val client: HttpClient) {
@@ -71,12 +70,13 @@ class CryptokeyService(private val client: HttpClient) {
      * @param body The [CryptokeyBody] instance.
      * @return A [Result] with the [Cryptokey] object.
      */
-    suspend fun createCryptokey(serverId: String, zoneId: String, body: CryptokeyBody): Result<Cryptokey> = runCatching {
-        val response = client.post(Cryptokeys(serverId, zoneId)) {
-            setBody(body)
+    suspend fun createCryptokey(serverId: String, zoneId: String, body: CryptokeyBody): Result<Cryptokey> =
+        runCatching {
+            val response = client.post(Cryptokeys(serverId, zoneId)) {
+                setBody(body)
+            }
+            return response.process()
         }
-        return response.process()
-    }
 
     /**
      * This method (de)activates a key from zone_name specified by cryptokey_id.
@@ -94,13 +94,14 @@ class CryptokeyService(private val client: HttpClient) {
      * @param active Whether the cryptokey is active.
      * @return A [Result] with the [Unit] object.
      */
-    suspend fun updateCryptokey(serverId: String, zoneId: String, cryptokeyId: Int, active: Boolean): Result<Unit> = runCatching {
-        val body = CryptokeyBody(active = active)
-        val response = client.put(Cryptokeys.Id(serverId, zoneId, cryptokeyId)) {
-            setBody(body)
+    suspend fun updateCryptokey(serverId: String, zoneId: String, cryptokeyId: Int, active: Boolean): Result<Unit> =
+        runCatching {
+            val body = CryptokeyBody(active = active)
+            val response = client.put(Cryptokeys.Id(serverId, zoneId, cryptokeyId)) {
+                setBody(body)
+            }
+            return response.process()
         }
-        return response.process()
-    }
 
     /**
      * Deletes a cryptokey from a specific zone in a server.

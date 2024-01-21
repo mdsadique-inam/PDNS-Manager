@@ -4,9 +4,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 enum class StatisticType {
-    @SerialName("StatisticItem") STATISTIC_ITEM,
-    @SerialName("MapStatisticItem") MAP_STATISTIC_ITEM,
-    @SerialName("RingStatisticItem") RING_STATISTIC_ITEM,
+    @SerialName("StatisticItem")
+    STATISTIC_ITEM,
+    @SerialName("MapStatisticItem")
+    MAP_STATISTIC_ITEM,
+    @SerialName("RingStatisticItem")
+    RING_STATISTIC_ITEM,
 }
 
 @Serializable

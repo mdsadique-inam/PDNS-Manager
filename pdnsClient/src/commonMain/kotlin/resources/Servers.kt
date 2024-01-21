@@ -13,13 +13,22 @@ class Servers {
     }
 
     @Resource("search-data")
-    class Search(val parent: Id, val q: String, val max: Int, @SerialName("object_type") val objectType: SearchType){
-        constructor(serverId: String, q: String, max: Int, objectType: SearchType) : this(Id(serverId), q, max, objectType)
+    class Search(val parent: Id, val q: String, val max: Int, @SerialName("object_type") val objectType: SearchType) {
+        constructor(serverId: String, q: String, max: Int, objectType: SearchType) : this(
+            Id(serverId),
+            q,
+            max,
+            objectType
+        )
     }
 
     @Resource("statistics")
     class Statistics(val parent: Id, val statistic: StatisticType? = null, val includerings: Boolean? = null) {
-        constructor(serverId: String, statistic: StatisticType? = null, includerings: Boolean? = null) : this(Id(serverId), statistic, includerings)
+        constructor(serverId: String, statistic: StatisticType? = null, includerings: Boolean? = null) : this(
+            Id(
+                serverId
+            ), statistic, includerings
+        )
     }
 
     @Resource("cache/flush")

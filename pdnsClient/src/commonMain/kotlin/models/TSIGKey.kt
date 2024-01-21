@@ -30,11 +30,17 @@ data class TSIGKeyBody(
 )
 
 @Serializable
-enum class TSIGKeyAlgorithm{
-    @SerialName("hmac-md5") HMAC_MD5,
-    @SerialName("hmac-sha1") HMAC_SHA1,
-    @SerialName("hmac-sha224") HMAC_SHA224,
-    @SerialName("hmac-sha256") HMAC_SHA256,
-    @SerialName("hmac-sha384") HMAC_SHA384,
-    @SerialName("hmac-sha512") HMAC_SHA512,
+enum class TSIGKeyAlgorithm {
+    @SerialName("hmac-md5")
+    HMAC_MD5,
+    @SerialName("hmac-sha1")
+    HMAC_SHA1,
+    @SerialName("hmac-sha224")
+    HMAC_SHA224,
+    @SerialName("hmac-sha256")
+    HMAC_SHA256,
+    @SerialName("hmac-sha384")
+    HMAC_SHA384,
+    @SerialName("hmac-sha512")
+    HMAC_SHA512,
 }

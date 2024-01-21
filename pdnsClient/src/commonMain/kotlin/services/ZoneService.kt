@@ -4,10 +4,10 @@ import extensions.process
 import io.ktor.client.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
-import models.ZoneBody
-import models.RRSetsBody
 import models.RRSet
+import models.RRSetsBody
 import models.Zone
+import models.ZoneBody
 import resources.Zones
 
 class ZoneService(private val client: HttpClient) {
@@ -213,7 +213,7 @@ class ZoneService(private val client: HttpClient) {
         val response = client.put(Zones.Id.Notify(serverId, zoneId))
         return response.process()
     }
-    
+
     /**
      * Rectify the zone data.
      *

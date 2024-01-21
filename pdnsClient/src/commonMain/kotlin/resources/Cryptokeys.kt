@@ -8,7 +8,10 @@ class Cryptokeys(val parent: Zones.Id) {
 
     @Resource("{cryptokeyId}")
     class Id(val parent: Cryptokeys, val cryptokeyId: Int) {
-        constructor(serverId: String, zoneId: String, cryptokeyId: Int) : this(Cryptokeys(serverId, zoneId), cryptokeyId)
+        constructor(serverId: String, zoneId: String, cryptokeyId: Int) : this(
+            Cryptokeys(serverId, zoneId),
+            cryptokeyId
+        )
     }
 
 }

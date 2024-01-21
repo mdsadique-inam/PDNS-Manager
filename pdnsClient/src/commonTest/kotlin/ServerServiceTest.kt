@@ -1,9 +1,7 @@
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
-import kotlinx.coroutines.test.runTest
-import exceptions.PDNSClientException
 import io.ktor.http.*
-import kotlinx.serialization.json.Json
+import kotlinx.coroutines.test.runTest
 import models.AutoPrimary
 import models.SearchType
 import services.ServerService
@@ -42,9 +40,7 @@ class ServerServiceTest {
     @Test
     fun createAutoPrimary() = runTest {
         val body = AutoPrimary(
-            "192.168.29.63",
-            "ns1.sadique.dev",
-            ""
+            "192.168.29.63", "ns1.sadique.dev", ""
         )
         val result = serverService.createAutoPrimary("localhost", body)
         assertTrue(result.isSuccess)
