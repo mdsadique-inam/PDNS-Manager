@@ -24,3 +24,37 @@ data class Server(
     @SerialName("config_url") val configUrl: String,
     @SerialName("zones_url") val zonesUrl: String,
 )
+
+/**
+ * Represents a primary server for the AutoPrimary feature.
+ *
+ * @property ip The IP address of the autoprimary server.
+ * @property nameserver The DNS name of the autoprimary server.
+ * @property account The account name for the autoprimary server.
+ */
+@Serializable
+data class AutoPrimary (
+    val ip: String,
+    val nameserver: String,
+    val account: String,
+)
+
+@Serializable
+enum class SearchType {
+    @SerialName("all") ALL,
+    @SerialName("record") RECORD,
+    @SerialName("zone") ZONE,
+    @SerialName("comment") COMMENT,
+}
+
+@Serializable
+data class SearchResult(
+    val content: String? = null,
+    val disabled: Boolean? = null,
+    val name: String? = null,
+    @SerialName("object_type") val objectType: SearchType,
+    @SerialName("zone_id") val zoneId: String? = null,
+    val zone: String? = null,
+    val type: String? = null,
+    val ttl: Int? = null,
+)

@@ -1,31 +1,37 @@
 package models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
-data class StatisticItem(
-    val name: String,
-    val type: String,
-    val value: String
-)
+enum class StatisticType {
+    @SerialName("StatisticItem") STATISTIC_ITEM,
+    @SerialName("MapStatisticItem") MAP_STATISTIC_ITEM,
+    @SerialName("RingStatisticItem") RING_STATISTIC_ITEM,
+}
 
 @Serializable
-data class MapStatisticItem(
-    val name: String,
-    val type: String,
-    val value: List<SimpleStatisticItem>
-)
+sealed class Statistic {
+    abstract val name: String
 
-@Serializable
-data class RingStatisticItem(
-    val name: String,
-    val type: String,
-    val size: Int,
-    val value: List<SimpleStatisticItem>
-)
+    @Serializable
+    @SerialName("StatisticItem")
+    data class StatisticItem(
+        override val name: String,
+        val value: String
+    ) : Statistic()
 
-@Serializable
-data class SimpleStatisticItem(
-    val name: String,
-    val value: String
-)
+    @Serializable
+    @SerialName("MapStatisticItem")
+    data class MapStatisticItem(
+        override val name: String,
+        val value: List<StatisticItem>
+    ) : Statistic()
+
+    @Serializable
+    @SerialName("RingStatisticItem")
+    data class RingStatisticItem(
+        override val name: String,
+        val size: Int,
+        val value: List<StatisticItem>
+    ) : Statistic()
+}

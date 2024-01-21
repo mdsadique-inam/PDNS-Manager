@@ -5,6 +5,7 @@ import exceptions.PDNSClientException
 import io.ktor.http.*
 import kotlinx.serialization.json.Json
 import models.AutoPrimary
+import models.SearchType
 import services.ServerService
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -47,5 +48,18 @@ class ServerServiceTest {
         )
         val result = serverService.createAutoPrimary("localhost", body)
         assertTrue(result.isSuccess)
+    }
+
+    @Test
+    fun search() = runTest {
+        val result = serverService.search("localhost", "sadique.dev", 10, SearchType.ALL)
+        assertTrue(result.isSuccess)
+    }
+
+    @Test
+    fun statistics() = runTest {
+        val result = serverService.statistics("localhost")
+        assertTrue(result.isSuccess)
+        println(result.getOrNull())
     }
 }

@@ -4,8 +4,7 @@ import extensions.process
 import io.ktor.client.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
-import models.AutoPrimary
-import models.Server
+import models.*
 import resources.AutoPrimaries
 import resources.Servers
 
@@ -105,6 +104,59 @@ class ServerService(private val client: HttpClient) {
      */
     suspend fun deleteAutoPrimary(serverId: String, ip: String, nameserver: String): Result<Unit> = runCatching {
         val response = client.delete(AutoPrimaries.Delete(AutoPrimaries(serverId), ip, nameserver))
+        return response.process()
+    }
+
+    /**
+     * Search the data inside PowerDNS
+     *
+     * Search the data inside PowerDNS for search_term and return at most max_results.
+     * This includes zones, records and comments.
+     * The * character can be used in search_term as a wildcard character
+     * and the ? character can be used as a wildcard for a single character.
+     *
+     * Responses:
+     * * 200 OK – Returns a JSON array with results Returns: array of [models.SearchResult] objects
+     * * 400 Bad Request – The supplied request was not valid Returns: [models.Error] object
+     * * 404 Not Found – Requested item was not found Returns: [models.Error] object
+     * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.Error] object
+     * * 500 Internal Server Error – Internal server error Returns: [models.Error] object
+     *
+     * @param serverId The ID of the server to search.
+     * @param query The query to search for.
+     * @param max The maximum number of results to return.
+     * @param objectType The type of object to search for.
+     * @return A [Result] with the [List] of [SearchResult]s.
+     */
+    suspend fun search(serverId: String, query: String, max: Int, objectType: SearchType): Result<List<SearchResult>> = runCatching {
+        val response = client.get(Servers.Search(serverId, query, max, objectType))
+        return response.process()
+    }
+
+
+    /**
+     * Query statistics.
+     *
+     * Query PowerDNS internal statistics.
+     *
+     * Responses:
+     * * 200 OK – List of [models.Statistic] Returns: array
+     * * 400 Bad Request – The supplied request was not valid Returns: [models.Error] object
+     * * 404 Not Found – Requested item was not found Returns: [models.Error] object
+     * * 422 Unprocessable Entity – Returned when a non-existing statistic name has been requested.
+     * Contains an error message
+     * * 500 Internal Server Error – Internal server error Returns: [models.Error] object
+     *
+     * @param serverId The ID of the server to retrieve the statistics from.
+     * @param statistic The name of the statistic to retrieve.
+     * When set to the name of a specific statistic, only this value is returned.
+     * If no statistic with that name exists, the response has a 422 status and an error message.
+     * @param includerings “true” (default) or “false”
+     * whether to include the Ring items, which can contain thousands of log messages or queried domains.
+     * Setting this to “false” may make the response a lot smaller.
+     */
+    suspend fun statistics(serverId: String, statistic: StatisticType? = null, includerings: Boolean? = null): Result<List<Statistic>> = runCatching {
+        val response = client.get(Servers.Statistics(Servers.Id(serverId), statistic, includerings))
         return response.process()
     }
 }
