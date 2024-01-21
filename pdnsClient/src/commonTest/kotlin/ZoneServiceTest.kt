@@ -1,4 +1,3 @@
-import exceptions.PDNSClientException
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -27,7 +26,7 @@ class ZoneServiceTest {
 
     @Test
     fun createNewZone() = runTest {
-        val zone = Zone(
+        val zone = ZoneBody(
             name = "sadique.dev.",
             nameservers = listOf("ns1.sadique.dev.", "ns2.sadique.dev."),
         )

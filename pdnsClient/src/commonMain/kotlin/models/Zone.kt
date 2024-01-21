@@ -44,14 +44,16 @@ enum class SOAEditApi {
  * @property slaveTsigKeyIds The id of the TSIG keys used for slave operation in this zone
  */
 @Serializable
-data class CreateZone(
+data class ZoneBody(
     val name: String,
     val type: String = "Zone",
     val kind: ZoneKind = ZoneKind.NATIVE,
     val nameservers: List<String> = emptyList(),
     val masters: List<String> = emptyList(),
     val dnssec: Boolean = true,
+    val nsec3param: String? = null,
     val nsec3narrow: Boolean = false,
+    @SerialName("soa_edit") val soaEdit: String? = null,
     @SerialName("soa_edit_api") val soaEditApi: SOAEditApi = SOAEditApi.DEFAULT,
     @SerialName("api_rectify") val apiRectify: Boolean = false,
     val zone: String? = null,
@@ -120,7 +122,7 @@ data class Zone(
 )
 
 @Serializable
-data class PatchRRSets(
+data class RRSetsBody(
     val rrsets: List<RRSet>
 )
 

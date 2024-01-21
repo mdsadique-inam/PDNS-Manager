@@ -4,7 +4,8 @@ import extensions.process
 import io.ktor.client.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
-import models.PatchRRSets
+import models.ZoneBody
+import models.RRSetsBody
 import models.RRSet
 import models.Zone
 import resources.Zones
@@ -47,9 +48,9 @@ class ZoneService(private val client: HttpClient) {
      * @param rrsets Whether to include RRsets
      * @return [Result] object with [Zone]
      */
-    suspend fun createZone(serverId: String, zone: Zone, rrsets: Boolean? = null): Result<Zone> = runCatching {
+    suspend fun createZone(serverId: String, body: ZoneBody, rrsets: Boolean? = null): Result<Zone> = runCatching {
         val response = client.post(Zones(serverId = serverId, rrsets = rrsets)) {
-            setBody(zone)
+            setBody(body)
         }
         return response.process()
     }
@@ -123,8 +124,8 @@ class ZoneService(private val client: HttpClient) {
      * @param zone The zone to update
      * @return [Result] object with [Unit]
      */
-    suspend fun updateZone(serverId: String, zone: Zone): Result<Unit> = runCatching {
-        val response = client.put(Zones.Id(serverId, zone.id)) {
+    suspend fun updateZone(serverId: String, zoneId: String, zone: ZoneBody): Result<Unit> = runCatching {
+        val response = client.put(Zones.Id(serverId, zoneId)) {
             setBody(zone)
         }
         return response.process()
@@ -145,7 +146,7 @@ class ZoneService(private val client: HttpClient) {
      * @param rrSets The list of RRsets to patch
      */
     suspend fun patchRRSets(serverId: String, zoneId: String, rrsets: List<RRSet>): Result<Unit> = runCatching {
-        val body = PatchRRSets(rrsets)
+        val body = RRSetsBody(rrsets)
         val response = client.patch(Zones.Id(serverId, zoneId)) {
             setBody(body)
         }
