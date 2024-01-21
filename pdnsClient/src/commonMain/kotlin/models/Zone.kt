@@ -25,45 +25,6 @@ enum class SOAEditApi {
 }
 
 /**
- * Represents a zone to be created.
- *
- * @property name Name of the zone (e.g. 'example.com.') MUST have a trailing dot
- * @property type Set to 'Zone'
- * @property kind Zone kind, one of [ZoneKind]
- * @property nameservers Simple list of nameserver names, including the trailing dot.
- *                      Not required for slave zones.
- * @property masters List of IP addresses configured as a master for this zone ('Slave' type zones only)
- * @property dnssec Whether this zone is DNSSEC signed (inferred from presigned being true XOR presence of at least one cryptokey with active being true)
- * @property nsec3narrow Whether the zone uses NSEC3 narrow
- * @property soaEditApi The SOA-EDIT-API metadata item
- * @property apiRectify Whether the zone will be rectified on data changes via the API
- * @property zone MAY contain a BIND-style zone file when creating a zone
- * @property catalog The catalog this zone is a member of
- * @property account MAY be set. Its value is defined by local policy
- * @property masterTsigKeyIds The id of the TSIG keys used for master operation in this zone
- * @property slaveTsigKeyIds The id of the TSIG keys used for slave operation in this zone
- */
-@Serializable
-data class ZoneBody(
-    val name: String,
-    val type: String = "Zone",
-    val kind: ZoneKind = ZoneKind.NATIVE,
-    val nameservers: List<String> = emptyList(),
-    val masters: List<String> = emptyList(),
-    val dnssec: Boolean = true,
-    val nsec3param: String? = null,
-    val nsec3narrow: Boolean = false,
-    @SerialName("soa_edit") val soaEdit: String? = null,
-    @SerialName("soa_edit_api") val soaEditApi: SOAEditApi = SOAEditApi.DEFAULT,
-    @SerialName("api_rectify") val apiRectify: Boolean = false,
-    val zone: String? = null,
-    val catalog: String? = null,
-    val account: String? = null,
-    @SerialName("master_tsig_key_ids") val masterTsigKeyIds: List<String>? = null,
-    @SerialName("slave_tsig_key_ids") val slaveTsigKeyIds: List<String>? = null,
-)
-
-/**
  * Represents a DNS zone.
  *
  * @property id The application should not interpret opaque zone id (string), assigned by the server.
@@ -121,9 +82,44 @@ data class Zone(
     @SerialName("slave_tsig_key_ids") val slaveTsigKeyIds: List<String>? = null,
 )
 
+
+/**
+ * Represents a zone to be created.
+ *
+ * @property name Name of the zone (e.g. 'example.com.') MUST have a trailing dot
+ * @property type Set to 'Zone'
+ * @property kind Zone kind, one of [ZoneKind]
+ * @property nameservers Simple list of nameserver names, including the trailing dot.
+ *                      Not required for slave zones.
+ * @property masters List of IP addresses configured as a master for this zone ('Slave' type zones only)
+ * @property dnssec Whether this zone is DNSSEC signed (inferred from presigned being true XOR presence of at least one cryptokey with active being true)
+ * @property nsec3narrow Whether the zone uses NSEC3 narrow
+ * @property soaEditApi The SOA-EDIT-API metadata item
+ * @property apiRectify Whether the zone will be rectified on data changes via the API
+ * @property zone MAY contain a BIND-style zone file when creating a zone
+ * @property catalog The catalog this zone is a member of
+ * @property account MAY be set. Its value is defined by local policy
+ * @property masterTsigKeyIds The id of the TSIG keys used for master operation in this zone
+ * @property slaveTsigKeyIds The id of the TSIG keys used for slave operation in this zone
+ */
 @Serializable
-data class RRSetsBody(
-    val rrsets: List<RRSet>
+data class ZoneBody(
+    val name: String,
+    val type: String = "Zone",
+    val kind: ZoneKind = ZoneKind.NATIVE,
+    val nameservers: List<String> = emptyList(),
+    val masters: List<String> = emptyList(),
+    val dnssec: Boolean = true,
+    val nsec3param: String? = null,
+    val nsec3narrow: Boolean = false,
+    @SerialName("soa_edit") val soaEdit: String? = null,
+    @SerialName("soa_edit_api") val soaEditApi: SOAEditApi = SOAEditApi.DEFAULT,
+    @SerialName("api_rectify") val apiRectify: Boolean = false,
+    val zone: String? = null,
+    val catalog: String? = null,
+    val account: String? = null,
+    @SerialName("master_tsig_key_ids") val masterTsigKeyIds: List<String>? = null,
+    @SerialName("slave_tsig_key_ids") val slaveTsigKeyIds: List<String>? = null,
 )
 
 enum class RRSetType {
@@ -230,6 +226,11 @@ data class Comment(
     val content: String,
     val account: String,
     @SerialName("modified_at") val modifiedAt: Int
+)
+
+@Serializable
+data class RRSetsBody(
+    val rrsets: List<RRSet>
 )
 
 /**
