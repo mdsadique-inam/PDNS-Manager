@@ -1,5 +1,6 @@
 package models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -13,29 +14,27 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class TSIGKey(
-    /**
-     * The name of the key
-     */
     val name: String,
-
-    /**
-     * The ID for this key, used in the TSIGKey URL endpoint.
-     */
     val id: String,
-
-    /**
-     * The algorithm of the TSIG key
-     */
-    val algorithm: String,
-
-    /**
-     * The Base64 encoded secret key, empty when listing keys.
-     * Maybe empty when Posting to the server generate the key material
-     */
+    val algorithm: TSIGKeyAlgorithm,
     val key: String,
-
-    /**
-     * Set to “TSIGKey”
-     */
-    val type: String
+    val type: String = "TSIGKey"
 )
+
+@Serializable
+data class TSIGKeyBody(
+    val name: String? = null,
+    val algorithm: TSIGKeyAlgorithm? = null,
+    val key: String? = null,
+    val type: String = "TSIGKey"
+)
+
+@Serializable
+enum class TSIGKeyAlgorithm{
+    @SerialName("hmac-md5") HMAC_MD5,
+    @SerialName("hmac-sha1") HMAC_SHA1,
+    @SerialName("hmac-sha224") HMAC_SHA224,
+    @SerialName("hmac-sha256") HMAC_SHA256,
+    @SerialName("hmac-sha384") HMAC_SHA384,
+    @SerialName("hmac-sha512") HMAC_SHA512,
+}
