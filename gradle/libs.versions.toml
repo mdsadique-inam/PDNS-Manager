@@ -8,13 +8,15 @@ kotlinx-serialization = "1.6.2"
 coroutines = "1.8.0-RC2"
 ktor = "2.3.7"
 ktor-wasm = "3.0.0-wasm2"
-exposed = "0.45.0"
+exposed = "0.46.0"
 postgres = "42.6.0"
+hikariCP = "5.1.0"
 logback = "1.4.14"
 koin = "3.5.3"
 koin-ksp = "1.3.0"
 ksp = "1.9.22-1.0.16"
 napier = "2.7.1"
+kotlinx-datetime = "0.5.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -28,6 +30,7 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
 
 # Ktor client
@@ -55,6 +58,7 @@ ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor"
 ktor-server-tests = { module = "io.ktor:ktor-server-tests", version.ref = "ktor" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
+ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-request-validation = { module = "io.ktor:ktor-server-request-validation", version.ref = "ktor" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
@@ -63,6 +67,7 @@ ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref 
 
 # Server Database
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgres" }
+hikariCP = { module = "com.zaxxer:HikariCP", version.ref = "hikariCP" }
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
@@ -102,6 +107,7 @@ ktor-server = [
     "ktor-serialization-kotlinx-json",
     "ktor-server-request-validation",
     "ktor-server-auth",
+    "ktor-server-auth-jwt",
     "ktor-server-resources"
 ]
 koin = [

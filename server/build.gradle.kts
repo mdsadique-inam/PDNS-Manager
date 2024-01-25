@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.bundles.koin)
     add("ksp", libs.koin.ksp)
     implementation(libs.postgresql)
+    implementation(libs.hikariCP)
     implementation(libs.bundles.exposed)
 
     testImplementation(libs.kotlin.test)

@@ -16,6 +16,7 @@ kotlin {
         commonMain.dependencies {
             // put your Multiplatform dependencies here
             implementation(libs.ktor.resources)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.core)
         }
         val wasmJsMain by getting {

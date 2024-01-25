@@ -16,8 +16,8 @@ object Users : UUIDTable() {
     val updatedAt = datetime("updated_at")
 }
 
-class UserDao(id: EntityID<UUID>) : UUIDEntity(id) {
-    companion object : UUIDEntityClass<UserDao>(Users)
+class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
+    companion object : UUIDEntityClass<UserEntity>(Users)
 
     var name by Users.name
     var username by Users.username

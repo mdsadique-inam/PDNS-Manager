@@ -18,10 +18,10 @@ object JwtTokens : IntIdTable("jwt_tokens") {
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
 }
 
-class JwtToken(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<JwtToken>(JwtTokens)
+class JwtTokenEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<JwtTokenEntity>(JwtTokens)
 
-    var user by UserDao referencedOn JwtTokens.userId
+    var user by UserEntity referencedOn JwtTokens.userId
     var userId by JwtTokens.userId.transform({ EntityID(it, Users) }, { it.value })
     var name by JwtTokens.name
     var type by JwtTokens.type
