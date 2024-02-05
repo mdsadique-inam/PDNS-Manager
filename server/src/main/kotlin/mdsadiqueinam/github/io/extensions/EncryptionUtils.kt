@@ -1,15 +1,17 @@
 package mdsadiqueinam.github.io.extensions
 
-import java.nio.charset.StandardCharsets
-import java.security.MessageDigest
+import mdsadiqueinam.github.io.utils.Encryption
 
-fun String.hashWithSHA256(): String {
-    val messageDigest = MessageDigest.getInstance("SHA-256")
-    val hashBytes = messageDigest.digest(toByteArray(StandardCharsets.UTF_8))
-    return hashBytes.toHex()
+
+fun String.hash(algorithm: Encryption.Algorithm = Encryption.Algorithm.ARGON2): String {
+    return Encryption.instance.hash(this, algorithm)
 }
 
-@Suppress("MagicNumber", "SpellCheckingInspection")
+fun String.verifyHash(input: String, algorithm: Encryption.Algorithm = Encryption.Algorithm.ARGON2): Boolean {
+    return Encryption.instance.verify(input, this, algorithm)
+}
+
+@Suppress("SpellCheckingInspection")
 fun ByteArray.toHex(): String {
     val hexChars = "0123456789ABCDEF"
     val hex = StringBuilder(size * 2)

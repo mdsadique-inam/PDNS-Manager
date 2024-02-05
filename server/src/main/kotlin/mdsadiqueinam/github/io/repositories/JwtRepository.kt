@@ -5,7 +5,7 @@ import models.User
 import org.koin.core.annotation.Single
 
 @Single
-class JwtRepository(val jwtService: JwtService) : Repository() {
+class JwtRepository(val jwtService: JwtService) {
     suspend fun validate(token: String?): User? {
         TODO("Not yet implemented")
     }

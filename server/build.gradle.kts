@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.postgresql)
     implementation(libs.hikariCP)
     implementation(libs.bundles.exposed)
+    implementation(libs.bouncycastle)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlinx.coroutines.test)
