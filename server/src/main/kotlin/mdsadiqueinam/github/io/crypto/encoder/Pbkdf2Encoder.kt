@@ -107,6 +107,19 @@ class Pbkdf2Encoder(
         return encode(encoded)
     }
 
+    private fun encode(rawPassword: CharSequence, salt: ByteArray): ByteArray {
+        try {
+            val spec = PBEKeySpec(
+                rawPassword.toString().toCharArray(),
+                EncodingUtils.concatenate(salt, this.secret), this.iterations, this.hashWidth
+            )
+            val skf = SecretKeyFactory.getInstance(this.algorithm)
+            return EncodingUtils.concatenate(salt, skf.generateSecret(spec).encoded)
+        } catch (ex: GeneralSecurityException) {
+            throw IllegalStateException("Could not create hash", ex)
+        }
+    }
+
     private fun encode(bytes: ByteArray): String {
         if (this.encodeHashAsBase64) {
             return Base64.getEncoder().encodeToString(bytes)
@@ -129,20 +142,6 @@ class Pbkdf2Encoder(
         }
         return Hex.decode(encodedBytes)
     }
-
-    private fun encode(rawPassword: CharSequence, salt: ByteArray): ByteArray {
-        try {
-            val spec = PBEKeySpec(
-                rawPassword.toString().toCharArray(),
-                EncodingUtils.concatenate(salt, this.secret), this.iterations, this.hashWidth
-            )
-            val skf = SecretKeyFactory.getInstance(this.algorithm)
-            return EncodingUtils.concatenate(salt, skf.generateSecret(spec).encoded)
-        } catch (ex: GeneralSecurityException) {
-            throw IllegalStateException("Could not create hash", ex)
-        }
-    }
-
     /**
      * The Algorithm used for creating the [SecretKeyFactory]
      */
