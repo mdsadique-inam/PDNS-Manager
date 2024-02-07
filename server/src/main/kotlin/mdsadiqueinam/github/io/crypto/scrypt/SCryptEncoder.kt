@@ -10,45 +10,36 @@ import java.util.*
 import kotlin.math.ln
 import kotlin.math.pow
 
-
+@Suppress("SpellCheckingInspection")
 /**
- *
- *
- * Implementation of PasswordEncoder that uses the SCrypt hashing function. Clients can
- * optionally supply a cpu cost parameter, a memory cost parameter and a parallelization
+ * Implementation of Encoder that uses the SCrypt hashing function.
+ * Clients can optionally supply a cpu cost parameter, a memory cost parameter and a parallelization
  * parameter.
  *
+ * A few [warnings](http://bouncy-castle.1462172.n4.nabble.com/Java-Bouncy-Castle-scrypt-implementation-td4656832.html):
+ * 1. The current implementation uses the Bouncy castle which does not exploit
+ *    parallelism/optimizations that password crackers will, so there is an unnecessary
+ *    asymmetry between attacker and defender.
+ * 2. Scrypt is based on Salsa20, which performs poorly in Java (on par with AES) but
+ *    performs awesome (~4-5x faster) on SIMD capable platforms
+ * 3. While there are some that would disagree, consider reading -
+ *    [Why I Don't Recommend Scrypt](https://blog.ircmaxell.com/2014/03/why-i-dont-recommend-scrypt.html)
+ *    (for password storage)
  *
- *
- *
- * A few [
- * warnings](http://bouncy-castle.1462172.n4.nabble.com/Java-Bouncy-Castle-scrypt-implementation-td4656832.html):
- *
- *
- *
- *  * The currently implementation uses Bouncy castle which does not exploit
- * parallelism/optimizations that password crackers will, so there is an unnecessary
- * asymmetry between attacker and defender.
- *  * Scrypt is based on Salsa20 which performs poorly in Java (on par with AES) but
- * performs awesome (~4-5x faster) on SIMD capable platforms
- *  * While there are some that would disagree, consider reading -
- * [ Why I
- * Don't Recommend Scrypt](https://blog.ircmaxell.com/2014/03/why-i-dont-recommend-scrypt.html) (for password storage)
- *
- * Constructs a SCrypt password encoder with the provided parameters.
- * @param cpuCost cpu cost of the algorithm (as defined in scrypt this is N). must be
+ * @constructor Constructs a SCrypt encoder with the provided parameters.
+ * @param cpuCost The cpu cost of the algorithm (as defined in scrypt this is N) must be
  * power of 2 greater than 1. Default is currently 65,536 or 2^16)
- * @param memoryCost memory cost of the algorithm (as defined in scrypt this is r)
- * Default is currently 8.
- * @param parallelization the parallelization of the algorithm (as defined in scrypt
- * this is p) Default is currently 1. Note that the implementation does not currently
- * take advantage of parallelization.
- * @param keyLength key length for the algorithm (as defined in scrypt this is dkLen).
- * The default is currently 32.
- * @param saltLength salt length (as defined in scrypt this is the length of S). The
+ * @param memoryCost The memory cost of the algorithm (as defined in scrypt this is r),
+ * default is currently 8.
+ * @param parallelization The parallelization of the algorithm (as defined in scrypt
+ * this is p), default is currently 1.
+ * Note that the implementation does not currently take advantage of parallelization.
+ * @param keyLength The key length for the algorithm (as defined in scrypt this is dkLen),
+ * the default is currently 32.
+ * @param saltLength The salt length (as defined in scrypt this is the length of S), the
  * default is currently 16.
  */
-class SCryptPasswordEncoder(
+class SCryptEncoder(
     private val cpuCost: Int = DEFAULT_CPU_COST,
     private val memoryCost: Int = DEFAULT_MEMORY_COST,
     private val parallelization: Int = DEFAULT_PARALLELISM,
@@ -73,24 +64,21 @@ class SCryptPasswordEncoder(
         this.saltGenerator = KeyGenerator.secureRandom(saltLength)
     }
 
-    override fun encode(rawPassword: CharSequence): String {
-        return digest(rawPassword, saltGenerator.generateKey())
+    override fun encode(raw: CharSequence): String {
+        return digest(raw, saltGenerator.generateKey())
     }
 
-    override fun matches(rawPassword: CharSequence, encodedPassword: String): Boolean {
-        if (encodedPassword.length < this.keyLength) {
+    override fun matches(raw: CharSequence, encoded: String): Boolean {
+        if (encoded.length < this.keyLength) {
             return false
         }
-        return decodeAndCheckMatches(rawPassword, encodedPassword)
+        return decodeAndCheckMatches(raw, encoded)
     }
 
-    fun upgradeEncoding(encodedPassword: String?): Boolean {
-        if (encodedPassword.isNullOrEmpty()) {
-            return false
-        }
-        val parts = encodedPassword.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    override fun upgradeEncoding(encoded: String): Boolean {
+        val parts = encoded.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         if (parts.size != 4) {
-            throw IllegalArgumentException("Encoded password does not look like SCrypt: $encodedPassword")
+            throw IllegalArgumentException("Encoded string does not look like SCrypt: $encoded")
         }
         val params = parts[1].toLong(16)
         val cpuCost = 2.toDouble().pow(((params shr 16) and 0xffffL).toDouble()).toInt()
@@ -99,8 +87,8 @@ class SCryptPasswordEncoder(
         return (cpuCost < this.cpuCost) || (memoryCost < this.memoryCost) || (parallelization < this.parallelization)
     }
 
-    private fun decodeAndCheckMatches(rawPassword: CharSequence, encodedPassword: String): Boolean {
-        val parts = encodedPassword.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    private fun decodeAndCheckMatches(raw: CharSequence, encoded: String): Boolean {
+        val parts = encoded.split("\\$".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
         if (parts.size != 4) {
             return false
         }
@@ -111,7 +99,7 @@ class SCryptPasswordEncoder(
         val memoryCost = (params.toInt() shr 8) and 0xff
         val parallelization = params.toInt() and 0xff
         val generated = SCrypt.generate(
-            rawPassword.toString().toByteArray(StandardCharsets.UTF_8),
+            raw.toString().toByteArray(StandardCharsets.UTF_8),
             salt,
             cpuCost,
             memoryCost,
@@ -121,9 +109,9 @@ class SCryptPasswordEncoder(
         return MessageDigest.isEqual(derived, generated)
     }
 
-    private fun digest(rawPassword: CharSequence, salt: ByteArray): String {
+    private fun digest(raw: CharSequence, salt: ByteArray): String {
         val derived = SCrypt.generate(
-            rawPassword.toString().toByteArray(StandardCharsets.UTF_8),
+            raw.toString().toByteArray(StandardCharsets.UTF_8),
             salt,
             this.cpuCost,
             this.memoryCost,
@@ -131,14 +119,14 @@ class SCryptPasswordEncoder(
             this.keyLength
         )
         val params =
-            (((ln(cpuCost.toDouble()) / ln(2.0)).toInt() shl 16L.toInt()) or (this.memoryCost shl 8) or this.parallelization).toString(
-                16
-            )
-        val sb = StringBuilder((salt.size + derived.size) * 2)
-        sb.append("$").append(params).append('$')
-        sb.append(encodePart(salt)).append('$')
-        sb.append(encodePart(derived))
-        return sb.toString()
+            (((ln(cpuCost.toDouble()) / ln(2.0)).toInt() shl 16) or (this.memoryCost shl 8) or this.parallelization).toString(
+                    16
+                )
+        return StringBuilder((salt.size + derived.size) * 2).apply {
+            append("$").append(params).append('$')
+            append(encodePart(salt)).append('$')
+            append(encodePart(derived))
+        }.toString()
     }
 
     private fun decodePart(part: String): ByteArray {

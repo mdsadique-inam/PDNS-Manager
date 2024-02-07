@@ -20,10 +20,9 @@ import javax.crypto.spec.PBEKeySpec
  * - a configurable key derivation function (see [SecretKeyFactoryAlgorithm])
  * - a configurable secret appended to the random salt (default is empty)
  *
- * The algorithm is invoked on the concatenated bytes of the salt, secret and password.
+ * The algorithm is invoked on the concatenated bytes of the salt, secret and hash.
  *
- * Constructs a PBKDF2 password encoder with a secret value as well as salt length,
- * iterations and algorithm.
+ * Constructs a PBKDF2 encoder with a secret value as well as salt length, iterations, and algorithm.
  * @param secret the secret
  * @param saltLength the salt length (in bytes)
  * @param iterations the number of iterations. Users should aim for taking about .5
@@ -101,16 +100,16 @@ class Pbkdf2Encoder(
         }
     }
 
-    override fun encode(rawPassword: CharSequence): String {
+    override fun encode(raw: CharSequence): String {
         val salt = saltGenerator.generateKey()
-        val encoded = encode(rawPassword, salt)
+        val encoded = encode(raw, salt)
         return encode(encoded)
     }
 
-    private fun encode(rawPassword: CharSequence, salt: ByteArray): ByteArray {
+    private fun encode(raw: CharSequence, salt: ByteArray): ByteArray {
         try {
             val spec = PBEKeySpec(
-                rawPassword.toString().toCharArray(),
+                raw.toString().toCharArray(),
                 EncodingUtils.concatenate(salt, this.secret), this.iterations, this.hashWidth
             )
             val skf = SecretKeyFactory.getInstance(this.algorithm)
@@ -127,13 +126,13 @@ class Pbkdf2Encoder(
         return String(Hex.encode(bytes))
     }
 
-    override fun matches(rawPassword: CharSequence, encodedPassword: String): Boolean {
-        val digested = decode(encodedPassword)
+    override fun matches(raw: CharSequence, encoded: String): Boolean {
+        val digested = decode(encoded)
         val salt = EncodingUtils.subArray(
             digested, 0,
             saltGenerator.keyLength
         )
-        return MessageDigest.isEqual(digested, encode(rawPassword, salt))
+        return MessageDigest.isEqual(digested, encode(raw, salt))
     }
 
     private fun decode(encodedBytes: String): ByteArray {
