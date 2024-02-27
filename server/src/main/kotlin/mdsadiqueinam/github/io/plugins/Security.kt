@@ -4,14 +4,13 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.Payload
 import io.ktor.http.*
-import io.ktor.http.auth.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import mdsadiqueinam.github.io.extensions.jwtRsaConfig
-import mdsadiqueinam.github.io.repositories.JwtRepository
+import mdsadiqueinam.github.io.repositories.UserRepository
 import models.User
 import org.koin.ktor.ext.inject
 
@@ -28,10 +27,9 @@ fun Application.configureSecurity() {
             )
 
             validate { credential ->
-                val accessToken = this.request.authorization()
-                val repository by inject<JwtRepository>()
-
-                repository.validate(accessToken)?.let {
+                val repository by inject<UserRepository>()
+                val id = credential.payload.getClaim("id").asString()
+                repository.findOrNull(id)?.let {
                     JWTUserPrincipal(credential.payload, it)
                 }
             }
