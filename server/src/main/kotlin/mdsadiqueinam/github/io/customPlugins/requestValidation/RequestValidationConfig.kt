@@ -1,7 +1,10 @@
-package mdsadiqueinam.github.io.plugins
+package mdsadiqueinam.github.io.customPlugins.requestValidation
 
 import io.ktor.server.application.*
+import io.ktor.util.pipeline.*
 import kotlin.reflect.*
+
+typealias ValidationBlock<T> = suspend PipelineContext<Any, ApplicationCall>.(T) -> ValidationResult
 
 /**
  * A config for [RequestValidation] plugin
@@ -30,12 +33,12 @@ class RequestValidationConfig {
     /**
      * Registers [Validator] that should check instances of a [kClass] using [block]
      */
-    fun <T : Any> validate(kClass: KClass<T>, block: suspend ApplicationCall.(T) -> ValidationResult) {
+    fun <T : Any> validate(kClass: KClass<T>, block: ValidationBlock<T>) {
         val validator = object : Validator {
             @Suppress("UNCHECKED_CAST")
-            override suspend fun validate(value: Any, call: ApplicationCall): ValidationResult {
+            override suspend fun validate(value: Any, ctx: PipelineContext<Any, ApplicationCall>): ValidationResult {
                 var result: ValidationResult
-                call.apply {
+                ctx.apply {
                     result = block(value as T)
                 }
                 return result
@@ -48,7 +51,7 @@ class RequestValidationConfig {
     /**
      * Registers [Validator] that should check instances of a [T] using [block]
      */
-    inline fun <reified T : Any> validate(noinline block: suspend ApplicationCall.(T) -> ValidationResult) {
+    inline fun <reified T : Any> validate(noinline block: ValidationBlock<T>) {
         validate(T::class, block)
     }
 
@@ -67,14 +70,14 @@ class RequestValidationConfig {
     }
 
     class ValidatorBuilder {
-        private lateinit var validationBlock: suspend (Any, ApplicationCall) -> ValidationResult
+        private lateinit var validationBlock: ValidationBlock<Any>
         private lateinit var filterBlock: (Any) -> Boolean
 
         fun filter(block: (Any) -> Boolean) {
             filterBlock = block
         }
 
-        fun validation(block: suspend (Any, ApplicationCall) -> ValidationResult) {
+        fun validation(block: ValidationBlock<Any>) {
             validationBlock = block
         }
 
@@ -82,7 +85,13 @@ class RequestValidationConfig {
             check(::validationBlock.isInitialized) { "`validation { ... } block is not set`" }
             check(::filterBlock.isInitialized) { "`filter { ... } block is not set`" }
             return object : Validator {
-                override suspend fun validate(value: Any, call: ApplicationCall) = validationBlock(value, call)
+                override suspend fun validate(value: Any, ctx: PipelineContext<Any, ApplicationCall>): ValidationResult {
+                    var result: ValidationResult
+                    ctx.apply {
+                        result = validationBlock(value)
+                    }
+                    return result
+                }
                 override fun filter(value: Any): Boolean = filterBlock(value)
             }
         }
