@@ -110,7 +110,6 @@ ktor-server = [
     "ktor-server-cio",
     "ktor-server-content-negotiation",
     "ktor-serialization-kotlinx-json",
-    "ktor-server-request-validation",
     "ktor-server-auth",
     "ktor-server-auth-jwt",
     "ktor-server-resources",
