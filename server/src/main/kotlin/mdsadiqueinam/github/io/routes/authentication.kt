@@ -8,7 +8,7 @@ import io.ktor.server.routing.Routing
 import models.RegisterBody
 import recources.Register
 
-fun Routing.auth() {
+fun Routing.authentication() {
     post<Register> {
         val body = call.receive<RegisterBody>()
         call.respond(body)

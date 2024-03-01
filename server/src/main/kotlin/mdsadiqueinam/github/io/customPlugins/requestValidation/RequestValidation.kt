@@ -24,6 +24,15 @@ data class ValidatedField(
  * A result of validation.
  */
 sealed class ValidationResult {
+    companion object {
+        fun result(fields: List<ValidatedField>): ValidationResult {
+            if (fields.isNotEmpty()) {
+                return Invalid(fields)
+            }
+            return Valid
+        }
+    }
+
     /**
      * A successful result of validation.
      */
