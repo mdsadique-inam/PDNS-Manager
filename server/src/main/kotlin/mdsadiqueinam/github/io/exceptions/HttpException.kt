@@ -5,7 +5,7 @@ import mdsadiqueinam.github.io.serializers.SHttpStatusCode
 import java.util.*
 
 @Serializable
-data class HttpException(val statusCode: SHttpStatusCode,override val message: String, val code: String) :
+open class HttpException(val statusCode: SHttpStatusCode, override val message: String, val code: String) :
     Throwable(message) {
 
     constructor(
