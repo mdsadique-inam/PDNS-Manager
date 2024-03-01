@@ -16,7 +16,7 @@ data class ValidatedField(
     val errors: List<String>
 ) {
     override fun toString(): String {
-        return "$field has following errors ${errors.joinToString { ", " }}"
+        return "field '$field' has following errors ${errors.joinToString(", ")}"
     }
 }
 
@@ -49,7 +49,7 @@ interface Validator {
     /**
      * Validates the [value].
      */
-    suspend fun validate(value: Any, ctx: PipelineContext<Any, ApplicationCall>): ValidationResult
+    suspend fun validate(value: Any, context: PipelineContext<Any, ApplicationCall>): ValidationResult
 
     /**
      * Checks if the [value] should be checked by this validator.
@@ -81,9 +81,9 @@ val RequestValidation: RouteScopedPlugin<RequestValidationConfig> = createRouteS
 
     val validators = pluginConfig.validators
 
-    on(RequestBodyTransformed) { content ->
+    on(RequestBodyTransformed) { content, context ->
         val failures = validators.filter { it.filter(content) }
-            .map { it.validate(content, this) }
+            .map {  it.validate(content, context) }
             .filterIsInstance<ValidationResult.Invalid>()
         if (failures.isNotEmpty()) {
             throw RequestValidationException(content, failures.flatMap { it.fields })
@@ -114,13 +114,13 @@ class RequestValidationException(
     val fields: List<ValidatedField>
 ) : IllegalArgumentException("Validation failed for $value. Reasons: ${fields.joinToString(". \n")}")
 
-private object RequestBodyTransformed : Hook<suspend PipelineContext<Any, ApplicationCall>.(content: Any) -> Unit> {
+private object RequestBodyTransformed : Hook<suspend (content: Any, context: PipelineContext<Any, ApplicationCall>) -> Unit> {
     override fun install(
         pipeline: ApplicationCallPipeline,
-        handler: suspend PipelineContext<Any, ApplicationCall>.(content: Any) -> Unit
+        handler: suspend (content: Any, context: PipelineContext<Any, ApplicationCall>) -> Unit
     ) {
         pipeline.receivePipeline.intercept(ApplicationReceivePipeline.After) {
-            handler(subject)
+            handler(subject, this)
         }
     }
 }

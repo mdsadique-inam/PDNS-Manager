@@ -36,9 +36,9 @@ class RequestValidationConfig {
     fun <T : Any> validate(kClass: KClass<T>, block: ValidationBlock<T>) {
         val validator = object : Validator {
             @Suppress("UNCHECKED_CAST")
-            override suspend fun validate(value: Any, ctx: PipelineContext<Any, ApplicationCall>): ValidationResult {
+            override suspend fun validate(value: Any, context: PipelineContext<Any, ApplicationCall>): ValidationResult {
                 var result: ValidationResult
-                ctx.apply {
+                context.apply {
                     result = block(value as T)
                 }
                 return result
@@ -85,9 +85,9 @@ class RequestValidationConfig {
             check(::validationBlock.isInitialized) { "`validation { ... } block is not set`" }
             check(::filterBlock.isInitialized) { "`filter { ... } block is not set`" }
             return object : Validator {
-                override suspend fun validate(value: Any, ctx: PipelineContext<Any, ApplicationCall>): ValidationResult {
+                override suspend fun validate(value: Any, context: PipelineContext<Any, ApplicationCall>): ValidationResult {
                     var result: ValidationResult
-                    ctx.apply {
+                    context.apply {
                         result = validationBlock(value)
                     }
                     return result

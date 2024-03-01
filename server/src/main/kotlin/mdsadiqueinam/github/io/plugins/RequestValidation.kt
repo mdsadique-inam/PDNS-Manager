@@ -13,17 +13,17 @@ fun Application.configureRequestValidation() {
             val fields = mutableListOf<ValidatedField>()
 
             it.name.apply {
-                val fieldError = ValidatedField(it::name.name, mutableListOf())
+                val fieldErrors = mutableListOf<String>()
                 if (isEmpty()) {
-                    fieldError.errors.plus("Name cannot be empty")
+                    fieldErrors.add("Name cannot be empty")
                 }
-                if (fieldError.errors.isNotEmpty()) {
-                    fields.plus(fieldError)
+                if (fieldErrors.isNotEmpty()) {
+                    fields.add(ValidatedField(it::name.name, fieldErrors))
                 }
             }
 
             if (fields.isNotEmpty()) {
-                ValidationResult.Invalid(fields)
+                return@validate ValidationResult.Invalid(fields)
             }
 
             ValidationResult.Valid
