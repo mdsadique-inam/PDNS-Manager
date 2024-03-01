@@ -49,7 +49,7 @@ interface Validator {
     /**
      * Validates the [value].
      */
-    suspend fun validate(value: Any, context: PipelineContext<Any, ApplicationCall>): ValidationResult
+    suspend fun validate(call: ApplicationCall, value: Any): ValidationResult
 
     /**
      * Checks if the [value] should be checked by this validator.
@@ -81,9 +81,9 @@ val RequestValidation: RouteScopedPlugin<RequestValidationConfig> = createRouteS
 
     val validators = pluginConfig.validators
 
-    on(RequestBodyTransformed) { content, context ->
+    on(RequestBodyTransformed) { call, content ->
         val failures = validators.filter { it.filter(content) }
-            .map {  it.validate(content, context) }
+            .map {  it.validate(call, content) }
             .filterIsInstance<ValidationResult.Invalid>()
         if (failures.isNotEmpty()) {
             throw RequestValidationException(content, failures.flatMap { it.fields })
@@ -114,13 +114,13 @@ class RequestValidationException(
     val fields: List<ValidatedField>
 ) : IllegalArgumentException("Validation failed for $value. Reasons: ${fields.joinToString(". \n")}")
 
-private object RequestBodyTransformed : Hook<suspend (content: Any, context: PipelineContext<Any, ApplicationCall>) -> Unit> {
+private object RequestBodyTransformed : Hook<suspend (call: ApplicationCall, content: Any) -> Unit> {
     override fun install(
         pipeline: ApplicationCallPipeline,
-        handler: suspend (content: Any, context: PipelineContext<Any, ApplicationCall>) -> Unit
+        handler: suspend (call: ApplicationCall, content: Any) -> Unit
     ) {
         pipeline.receivePipeline.intercept(ApplicationReceivePipeline.After) {
-            handler(subject, this)
+            handler(call, subject)
         }
     }
 }

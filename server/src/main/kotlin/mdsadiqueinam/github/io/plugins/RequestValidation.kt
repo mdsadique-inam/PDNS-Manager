@@ -9,7 +9,7 @@ import models.RegisterBody
 
 fun Application.configureRequestValidation() {
     install(RequestValidation) {
-        validate<RegisterBody> {
+        validate<RegisterBody> { _, it ->
             val fields = mutableListOf<ValidatedField>()
 
             it.name.apply {

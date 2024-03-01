@@ -4,7 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.util.pipeline.*
 import kotlin.reflect.*
 
-typealias ValidationBlock<T> = suspend PipelineContext<Any, ApplicationCall>.(T) -> ValidationResult
+typealias ValidationBlock<T> = suspend (call: ApplicationCall, content: T) -> ValidationResult
 
 /**
  * A config for [RequestValidation] plugin
@@ -36,13 +36,7 @@ class RequestValidationConfig {
     fun <T : Any> validate(kClass: KClass<T>, block: ValidationBlock<T>) {
         val validator = object : Validator {
             @Suppress("UNCHECKED_CAST")
-            override suspend fun validate(value: Any, context: PipelineContext<Any, ApplicationCall>): ValidationResult {
-                var result: ValidationResult
-                context.apply {
-                    result = block(value as T)
-                }
-                return result
-            }
+            override suspend fun validate(call: ApplicationCall, value: Any): ValidationResult = block(call, value as T)
             override fun filter(value: Any): Boolean = kClass.isInstance(value)
         }
         validate(validator)
@@ -85,13 +79,7 @@ class RequestValidationConfig {
             check(::validationBlock.isInitialized) { "`validation { ... } block is not set`" }
             check(::filterBlock.isInitialized) { "`filter { ... } block is not set`" }
             return object : Validator {
-                override suspend fun validate(value: Any, context: PipelineContext<Any, ApplicationCall>): ValidationResult {
-                    var result: ValidationResult
-                    context.apply {
-                        result = validationBlock(value)
-                    }
-                    return result
-                }
+                override suspend fun validate(call: ApplicationCall, value: Any): ValidationResult = validationBlock(call, value)
                 override fun filter(value: Any): Boolean = filterBlock(value)
             }
         }
