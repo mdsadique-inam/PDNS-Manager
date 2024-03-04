@@ -6,16 +6,7 @@ import io.ktor.server.request.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.errors.*
 import kotlinx.serialization.Serializable
-
-@Serializable
-data class ValidatedField(
-    val field: String,
-    val errors: List<String>
-) {
-    override fun toString(): String {
-        return "field '$field' has following errors ${errors.joinToString(", ")}"
-    }
-}
+import models.ValidatedField
 
 /**
  * A result of validation.

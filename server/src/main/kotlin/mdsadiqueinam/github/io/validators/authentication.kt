@@ -1,10 +1,10 @@
 package mdsadiqueinam.github.io.validators
 
 import mdsadiqueinam.github.io.customPlugins.requestValidation.RequestValidationConfig
-import mdsadiqueinam.github.io.customPlugins.requestValidation.ValidatedField
 import mdsadiqueinam.github.io.customPlugins.requestValidation.ValidationResult
 import mdsadiqueinam.github.io.extensions.isNotValidEmail
 import models.RegisterBody
+import models.ValidatedField
 
 fun RequestValidationConfig.validateAuthentication() {
     validate<RegisterBody> { _, it ->
