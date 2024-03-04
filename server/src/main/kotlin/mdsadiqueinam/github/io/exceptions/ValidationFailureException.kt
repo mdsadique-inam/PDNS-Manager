@@ -7,4 +7,4 @@ import mdsadiqueinam.github.io.customPlugins.requestValidation.ValidatedField
 @Serializable
 data class ValidationFailureException(
     val fields: List<ValidatedField>
-) : HttpException(HttpStatusCode.UnprocessableEntity, "Validation failed", "E_VALIDATION_FAILED")
+) : ApiException(HttpStatusCode.UnprocessableEntity, "Validation failed", "E_VALIDATION_FAILED")

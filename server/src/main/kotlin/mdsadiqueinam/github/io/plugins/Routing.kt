@@ -8,10 +8,6 @@ import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
     routing {
-        val repository by inject<UserRepository>()
-        post("/login") {
-            repository.login("fnefjew", "skfjbsflvwulfy")
-        }
         authentication()
     }
 }

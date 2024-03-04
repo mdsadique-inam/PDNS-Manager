@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ESNext",
+    "allowImportingTsExtensions": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+	"noUnusedLocals": true,
+	"skipLibCheck": true,
+	"incremental": true,
+	"noUnusedParameters": true,
+	"removeComments": true,
+	"declaration": false,
+	"moduleResolution": "node",
+	"allowSyntheticDefaultImports": true,
+	"emitDecoratorMetadata": true,
+	"experimentalDecorators": true,
+	"esModuleInterop": true
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}

@@ -2,6 +2,7 @@ package mdsadiqueinam.github.io.repositories
 
 import mdsadiqueinam.github.io.database.services.UserService
 import models.User
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.core.annotation.Single
 import java.util.*
 
@@ -9,8 +10,10 @@ import java.util.*
 class UserRepository(private val userService: UserService) {
 
     fun findOrNull(id: String): User? {
-        val userEntity = userService.find(UUID.fromString(id))
-        return userEntity?.toModel()
+        return transaction {
+            val userEntity = userService.find(UUID.fromString(id))
+            userEntity?.toModel()
+        }
     }
 
     fun find(id: String): User {
