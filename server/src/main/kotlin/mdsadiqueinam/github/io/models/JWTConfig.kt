@@ -8,6 +8,8 @@ import java.security.spec.X509EncodedKeySpec
 import java.util.*
 
 sealed class JWTConfig {
+    val subject: String = "Authentication"
+    val expires: Long = 86400000
     abstract val issuer: String
     abstract val audience: String
     abstract val realm: String

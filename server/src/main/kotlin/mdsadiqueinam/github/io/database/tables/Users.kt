@@ -1,5 +1,6 @@
 package mdsadiqueinam.github.io.database.tables
 
+import models.User
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -25,4 +26,13 @@ class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     var password by Users.password
     var createdAt by Users.createdAt
     var updatedAt by Users.updatedAt
+
+    fun toModel() = User(
+        id = id.toString(),
+        username = username,
+        email = email,
+        name = name,
+        createdAt = createdAt,
+        updatedAt = updatedAt
+    )
 }

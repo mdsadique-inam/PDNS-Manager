@@ -2,13 +2,10 @@ package mdsadiqueinam.github.io.customPlugins.requestValidation
 
 import io.ktor.server.application.*
 import io.ktor.server.application.hooks.*
-import io.ktor.server.auth.*
 import io.ktor.server.request.*
-import io.ktor.util.pipeline.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.errors.*
 import kotlinx.serialization.Serializable
-import models.RegisterBody
 
 @Serializable
 data class ValidatedField(
@@ -39,7 +36,7 @@ sealed class ValidationResult {
     data object Valid : ValidationResult()
 
     /**
-     * An unsuccessful result of validation. All errors are stored in the [reasons] list.
+     * An unsuccessful result of validation. All errors are stored in the [fields] list.
      */
     class Invalid(
         /**
@@ -92,7 +89,7 @@ val RequestValidation: RouteScopedPlugin<RequestValidationConfig> = createRouteS
 
     on(RequestBodyTransformed) { call, content ->
         val failures = validators.filter { it.filter(content) }
-            .map {  it.validate(call, content) }
+            .map { it.validate(call, content) }
             .filterIsInstance<ValidationResult.Invalid>()
         if (failures.isNotEmpty()) {
             throw RequestValidationException(content, failures.flatMap { it.fields })
@@ -116,7 +113,7 @@ val RequestValidation: RouteScopedPlugin<RequestValidationConfig> = createRouteS
 /**
  * Thrown when validation fails.
  * @property value - invalid request body
- * @property reasons - combined reasons of all validation failures for this request
+ * @property fields - combined reasons of all validation failures for this request
  */
 class RequestValidationException(
     val value: Any,

@@ -17,4 +17,13 @@ class UserService {
         UserEntity
             .find { (Users.username eq uid) or (Users.email eq uid) }
             .firstOrNull()
+
+    fun create(username: String, email: String, name: String, password: String): UserEntity {
+        return UserEntity.new {
+            this.username = username
+            this.email = email
+            this.name = name
+            this.password = password
+        }
+    }
 }
