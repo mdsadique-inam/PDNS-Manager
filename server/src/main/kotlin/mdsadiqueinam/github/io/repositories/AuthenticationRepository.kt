@@ -3,15 +3,19 @@ package mdsadiqueinam.github.io.repositories
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import mdsadiqueinam.github.io.database.services.UserService
 import mdsadiqueinam.github.io.exceptions.InvalidCredentialException
 import mdsadiqueinam.github.io.models.JWTConfig
 import models.LoginResponse
-import models.RegisterBody
+import models.RegisterUser
 import models.User
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.security.crypto.password.PasswordEncoder
-import java.util.Date
+import java.util.*
 
 class AuthenticationRepository(
     private val jwtConfig: JWTConfig,
@@ -80,13 +84,17 @@ class AuthenticationRepository(
         }
     }
 
-    fun register(body: RegisterBody): LoginResponse {
+    fun register(body: RegisterUser): LoginResponse {
         return transaction {
             val userEntity = userService.create(
-                username = body.username,
-                email = body.email,
-                name = body.name,
-                password = encoder.encode(body.password)
+                User(
+                    id = "",
+                    name = body.name,
+                    username = body.username,
+                    email = body.email,
+                    createdAt = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+                ),
+                encoder.encode(body.password)
             )
             login(userEntity.toModel())
         }

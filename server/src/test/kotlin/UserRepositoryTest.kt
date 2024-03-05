@@ -1,5 +1,6 @@
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import kotlinx.serialization.Serializable
 import mdsadiqueinam.github.io.repositories.UserRepository
 import org.jetbrains.exposed.sql.Database
 import org.koin.core.context.startKoin

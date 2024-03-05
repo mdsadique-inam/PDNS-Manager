@@ -2,6 +2,7 @@ package mdsadiqueinam.github.io.database.services
 
 import mdsadiqueinam.github.io.database.tables.UserEntity
 import mdsadiqueinam.github.io.database.tables.Users
+import models.User
 import org.jetbrains.exposed.sql.or
 import org.koin.core.annotation.Single
 import java.util.*
@@ -18,12 +19,23 @@ class UserService {
             .find { (Users.username eq uid) or (Users.email eq uid) }
             .firstOrNull()
 
-    fun create(username: String, email: String, name: String, password: String): UserEntity {
+    fun create(user: User, password: String): UserEntity {
         return UserEntity.new {
-            this.username = username
-            this.email = email
-            this.name = name
+            this.username = user.username
+            this.email = user.email
+            this.name = user.name
             this.password = password
+        }
+    }
+
+    fun update(user: User, password: String?) {
+        val userEntity = find(UUID.fromString(user.id)) ?: throw NoSuchElementException("User not found")
+        userEntity.apply {
+            this.username = user.username
+            this.email = user.email
+            this.name = user.name
+            this.updatedAt = user.updatedAt
+            password?.let { this.password = it }
         }
     }
 }

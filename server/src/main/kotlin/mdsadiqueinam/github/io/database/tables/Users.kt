@@ -14,7 +14,7 @@ object Users : UUIDTable() {
     val email = varchar("email", length = 250).uniqueIndex()
     val password = varchar("password", length = 250)
     val createdAt = datetime("created_at")
-    val updatedAt = datetime("updated_at")
+    val updatedAt = datetime("updated_at").nullable()
 }
 
 class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
