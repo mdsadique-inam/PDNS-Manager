@@ -3,10 +3,16 @@ package models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RegisterUser(
+data class RegisterBody(
     val name: String,
     val username: String,
     val email: String,
+    val password: String,
+)
+
+@Serializable
+data class LoginBody(
+    val uid: String,
     val password: String,
 )
 

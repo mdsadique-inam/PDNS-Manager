@@ -3,11 +3,11 @@ package mdsadiqueinam.github.io.validators
 import mdsadiqueinam.github.io.customPlugins.requestValidation.RequestValidationConfig
 import mdsadiqueinam.github.io.customPlugins.requestValidation.ValidationResult
 import mdsadiqueinam.github.io.extensions.isNotValidEmail
-import models.RegisterUser
+import models.RegisterBody
 import models.ValidatedField
 
 fun RequestValidationConfig.validateAuthentication() {
-    validate<RegisterUser> { _, it ->
+    validate<RegisterBody> { _, it ->
         val fields = mutableListOf<ValidatedField>()
 
         it.name.apply {

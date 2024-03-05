@@ -4,14 +4,13 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import kotlinx.datetime.Clock
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import mdsadiqueinam.github.io.database.services.UserService
 import mdsadiqueinam.github.io.exceptions.InvalidCredentialException
 import mdsadiqueinam.github.io.models.JWTConfig
 import models.LoginResponse
-import models.RegisterUser
+import models.RegisterBody
 import models.User
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -84,7 +83,7 @@ class AuthenticationRepository(
         }
     }
 
-    fun register(body: RegisterUser): LoginResponse {
+    fun register(body: RegisterBody): LoginResponse {
         return transaction {
             val userEntity = userService.create(
                 User(
