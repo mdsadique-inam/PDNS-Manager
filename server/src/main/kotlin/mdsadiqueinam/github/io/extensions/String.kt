@@ -8,3 +8,7 @@ fun String.isValidEmail(): Boolean {
 fun String.isNotValidEmail(): Boolean {
     return !isValidEmail()
 }
+
+fun String.toUUID(): java.util.UUID {
+    return java.util.UUID.fromString(this)
+}

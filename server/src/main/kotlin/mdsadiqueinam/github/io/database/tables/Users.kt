@@ -6,7 +6,7 @@ import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
-import java.util.UUID
+import java.util.*
 
 object Users : UUIDTable() {
     val name = varchar("name", length = 250)
@@ -36,3 +36,4 @@ class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
         updatedAt = updatedAt
     )
 }
+
