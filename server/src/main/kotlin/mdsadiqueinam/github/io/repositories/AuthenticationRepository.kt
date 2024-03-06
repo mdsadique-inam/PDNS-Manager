@@ -13,9 +13,11 @@ import models.LoginResponse
 import models.RegisterBody
 import models.User
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.core.annotation.Single
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 
+@Single
 class AuthenticationRepository(
     private val jwtConfig: JWTConfig,
     private val userService: UserService,
