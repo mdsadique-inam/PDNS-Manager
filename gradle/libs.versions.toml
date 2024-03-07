@@ -4,7 +4,7 @@ junit = "4.13.2"
 kotlin = "1.9.22"
 kotlinx-serialization = "1.6.3"
 coroutines = "1.8.0"
-ktor = "2.3.8"
+ktor = "2.3.9"
 ktor-wasm = "3.0.0-wasm2"
 exposed = "0.47.0"
 postgres = "42.6.0"
@@ -65,6 +65,7 @@ ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-request-validation = { module = "io.ktor:ktor-server-request-validation", version.ref = "ktor" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-serialization-kotlinx-protobuf = { module = "io.ktor:ktor-serialization-kotlinx-protobuf", version.ref = "ktor" }
 ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
 ktor-server-status-pages = { module = "io.ktor:ktor-server-status-pages", version.ref = "ktor" }
 
@@ -110,6 +111,7 @@ ktor-server = [
     "ktor-server-cio",
     "ktor-server-content-negotiation",
     "ktor-serialization-kotlinx-json",
+    "ktor-serialization-kotlinx-protobuf",
     "ktor-server-auth",
     "ktor-server-auth-jwt",
     "ktor-server-resources",
