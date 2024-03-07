@@ -15,9 +15,8 @@ import org.koin.logger.slf4jLogger
 fun Application.configureDI() {
     koin {
         slf4jLogger()
-        modules(DatabaseModule().module, RepositoryModule().module, module {
+        modules(DatabaseModule().module, RepositoryModule(jwtConfig).module, module {
             single { createDelegatingPasswordEncoder() }
-            factory { jwtConfig }
         })
     }
 }
