@@ -21,7 +21,7 @@ kotlin {
         }
         val wasmJsMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-resources:3.0.0-wasm2")
+                implementation(libs.ktor.client.resources.wasm)
             }
         }
     }
