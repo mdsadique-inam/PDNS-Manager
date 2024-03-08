@@ -22,9 +22,15 @@ class ZoneService(private val client: HttpClient) {
      * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.Error] object
      * * 500 Internal Server Error – Internal server error Returns: [models.Error] object
      *
-     * @param serverId The server id
-     * @param zone The zone name
-     * @param dnssec Whether to include DNSSEC information
+     * @param serverId The server id. The id of the server to retrieve
+     * @param zone The zone name.
+     * When set to the name of a zone, only this zone is returned.
+     * If no zone with that name exists, the response is an empty array.
+     * This can be used to check if a zone exists in the database
+     * without having to guess/encode the zone’s id or to check if a zone exists.
+     * @param dnssec Whether to include DNSSEC information.
+     * 'true' (default) or 'false', whether to include the “dnssec” and ”edited_serial” fields in the Zone objects.
+     * Setting this to 'false' will make the query a lot faster.
      * @return [Result] object with [List] of [Zone]s
      */
     suspend fun fetchZones(serverId: String, zone: String? = null, dnssec: Boolean? = null): Result<List<Zone>> =
@@ -43,9 +49,10 @@ class ZoneService(private val client: HttpClient) {
      * * 422 Unprocessable Entity – The input to the operation was not valid Returns: [models.Error] object
      * * 500 Internal Server Error – Internal server error Returns: [models.Error] object
      *
-     * @param serverId The server id
-     * @param zone The zone to create
-     * @param rrsets Whether to include RRsets
+     * @param serverId The server id. The id of the server to retrieve
+     * @param body The zone to create
+     * @param rrsets Whether to include RRsets.
+     * “true” (default) or “false”, whether to include the “rrsets” in the response Zone object.
      * @return [Result] object with [Zone]
      */
     suspend fun createZone(serverId: String, body: ZoneBody, rrsets: Boolean? = null): Result<Zone> = runCatching {
@@ -57,10 +64,6 @@ class ZoneService(private val client: HttpClient) {
 
     /**
      * Get the zone managed by a server
-     *
-     * This class represents an Id resource with the specified parameters.
-     * It is used in conjunction with the Zones class.
-     * An Id resource contains information about an identifier associated with a zone.
      *
      * Responses:
      * * 200 OK – A Zone Returns: [models.Zone] object
