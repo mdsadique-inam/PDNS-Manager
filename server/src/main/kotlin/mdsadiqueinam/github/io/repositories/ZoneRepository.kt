@@ -19,31 +19,44 @@ class ZoneRepository(private val zoneService: ZoneService) {
     }
 
     suspend fun fetchZone(
+        user: User,
         zoneId: String,
         rrsets: Boolean? = null,
         rrsetName: String? = null,
         rrsetType: String? = null
     ): Zone {
-        return zoneService.fetchZone("localhost", zoneId, rrsets, rrsetName, rrsetType).getOrThrow()
+        val zone = zoneService.fetchZone("localhost", zoneId, rrsets, rrsetName, rrsetType).getOrThrow()
+        require(zone.account == user.id) { "Zone does not belong to user" }
+        return zone
     }
 
-    suspend fun updateZone(zoneId: String, zone: ZoneBody) {
+    suspend fun updateZone(user: User, zoneId: String, zone: ZoneBody) {
+        // Check if the zone belongs to the user
+        fetchZone(user, zoneId)
         return zoneService.updateZone("localhost", zoneId, zone).getOrThrow()
     }
 
-    suspend fun deleteZone(zoneId: String) {
+    suspend fun deleteZone(user: User, zoneId: String) {
+        // Check if the zone belongs to the user
+        fetchZone(user, zoneId)
         return zoneService.deleteZone("localhost", zoneId).getOrThrow()
     }
 
-    suspend fun addRRSet(zoneId: String, rrset: RRSet) {
+    suspend fun addRRSet(user: User, zoneId: String, rrset: RRSet) {
+        // Check if the zone belongs to the user
+        fetchZone(user, zoneId)
         return zoneService.patchRRSets("localhost", zoneId, listOf(rrset.copy(changetype = null))).getOrThrow()
     }
 
-    suspend fun updateRRSet(zoneId: String, rrset: RRSet) {
+    suspend fun updateRRSet(user: User, zoneId: String, rrset: RRSet) {
+        // Check if the zone belongs to the user
+        fetchZone(user, zoneId)
         return zoneService.patchRRSets("localhost", zoneId, listOf(rrset.copy(changetype = ChangeType.REPLACE))).getOrThrow()
     }
 
-    suspend fun deleteRRSet(zoneId: String, rrset: RRSet) {
+    suspend fun deleteRRSet(user: User, zoneId: String, rrset: RRSet) {
+        // Check if the zone belongs to the user
+        fetchZone(user, zoneId)
         return zoneService.patchRRSets("localhost", zoneId, listOf(rrset.copy(changetype = ChangeType.DELETE))).getOrThrow()
     }
 }
