@@ -12,6 +12,7 @@ import mdsadiqueinam.github.io.models.JWTConfig
 import models.LoginResponse
 import models.RegisterBody
 import models.User
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.core.annotation.Single
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -64,10 +65,14 @@ class AuthenticationRepository(
         }
     }
 
-    fun attempt(uid: String, password: String): LoginResponse {
-        return transaction {
+    suspend fun attempt(uid: String, password: String): LoginResponse {
+        return newSuspendedTransaction {
             val userEntity = userService.findByUsernameOrEmail(uid)
             if (userEntity == null) {
+                /**
+                 * If the user is not found, we hash the password to prevent timing attacks
+                 * and throw an exception
+                 */
                 /**
                  * If the user is not found, we hash the password to prevent timing attacks
                  * and throw an exception
@@ -84,8 +89,8 @@ class AuthenticationRepository(
         }
     }
 
-    fun register(body: RegisterBody): LoginResponse {
-        return transaction {
+    suspend fun register(body: RegisterBody): LoginResponse {
+        return newSuspendedTransaction {
             val userEntity = userService.create(
                 User(
                     id = "",

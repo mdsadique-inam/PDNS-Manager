@@ -31,6 +31,7 @@ class RepositoryModule(private val jwtConfig: JWTConfig) {
         this.module.includes(pdnsClientModule)
     }
 
+    @Suppress("unused")
     @Single
     fun authenticationRepository(userService: UserService, encoder: PasswordEncoder) = AuthenticationRepository(jwtConfig, userService, encoder)
 }

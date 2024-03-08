@@ -6,25 +6,26 @@ import kotlinx.datetime.toLocalDateTime
 import mdsadiqueinam.github.io.database.services.UserService
 import mdsadiqueinam.github.io.extensions.toUUID
 import models.User
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.core.annotation.Single
 
 @Single
 class UserRepository(private val userService: UserService) {
 
-    fun findOrNull(id: String): User? {
-        return transaction {
+    suspend fun findOrNull(id: String): User? {
+        return newSuspendedTransaction {
             val userEntity = userService.find(id.toUUID())
             userEntity?.toModel()
         }
     }
 
-    fun find(id: String): User {
+    suspend fun find(id: String): User {
         return findOrNull(id) ?: throw NoSuchElementException("User not found")
     }
 
-    fun update(user: User): User {
-        return transaction {
+    suspend fun update(user: User): User {
+        return newSuspendedTransaction {
             userService.update(
                 user.copy(
                     updatedAt = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
