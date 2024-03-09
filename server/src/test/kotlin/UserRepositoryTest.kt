@@ -1,13 +1,13 @@
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import kotlinx.serialization.Serializable
+import kotlinx.coroutines.test.runTest
 import mdsadiqueinam.github.io.repositories.UserRepository
 import org.jetbrains.exposed.sql.Database
 import org.koin.core.context.startKoin
 import org.koin.ksp.generated.defaultModule
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import java.util.UUID
+import java.util.*
 import kotlin.test.Test
 
 class UserRepositoryTest : KoinTest {
@@ -30,13 +30,13 @@ class UserRepositoryTest : KoinTest {
     }
 
     @Test
-    fun `should be null`() {
+    fun `should be null`() = runTest {
         val user = repository.findOrNull(UUID.randomUUID().toString())
         assert(user == null)
     }
 
     @Test
-    fun `should throw an error`() {
+    fun `should throw an error`() = runTest {
         try {
             repository.find(UUID.randomUUID().toString())
         } catch (e: NoSuchElementException) {

@@ -39,6 +39,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(projects.shared)
+            implementation(projects.pdnsClient)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

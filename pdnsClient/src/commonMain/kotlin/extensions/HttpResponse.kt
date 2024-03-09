@@ -1,8 +1,9 @@
 package extensions
 
-import exceptions.PDNSClientException
+import exceptions.PDNSApiException
 import io.ktor.client.call.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import models.Error
 
 
@@ -18,7 +19,7 @@ suspend inline fun <reified T> HttpResponse.process(): Result<T> {
 
         in intArrayOf(400, 404, 422, 500) -> {
             val body = this.body<Error>()
-            Result.failure(PDNSClientException(body))
+            Result.failure(PDNSApiException(HttpStatusCode.fromValue(status.value), body))
         }
 
         else -> {

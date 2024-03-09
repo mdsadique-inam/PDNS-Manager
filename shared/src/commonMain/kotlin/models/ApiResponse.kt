@@ -2,6 +2,13 @@ package models
 
 import kotlinx.serialization.Serializable
 
+interface ApiResponseError<T> {
+    val statusCode: Int
+    val message: String
+    val code: String
+    val errors: List<T>?
+}
+
 @Serializable
 data class ValidatedField(
     val field: String,
@@ -20,5 +27,10 @@ sealed class ApiResponse {
     data class Success<T>(val data: T, override val message: String) : ApiResponse()
 
     @Serializable
-    data class Error<T>(val statusCode: Int, override val message: String, val code: String, val errors: T? = null) : ApiResponse()
+    data class Error<T>(
+        override val statusCode: Int,
+        override val message: String,
+        override val code: String,
+        override val errors: List<T>? = null
+    ) : ApiResponse(), ApiResponseError<T>
 }
