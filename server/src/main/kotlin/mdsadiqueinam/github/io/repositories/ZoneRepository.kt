@@ -7,56 +7,59 @@ import services.ZoneService
 @Single
 class ZoneRepository(private val zoneService: ZoneService) {
 
-    suspend fun fetchZones(user: User, zone: String? = null, dnssec: Boolean? = null): List<Zone> {
-        return zoneService.fetchZones("localhost", zone, dnssec).getOrThrow().filter {
+    suspend fun fetchZones(user: User, serverId: String, zone: String? = null, dnssec: Boolean? = null): List<Zone> {
+        return zoneService.fetchZones(serverId, zone, dnssec).getOrThrow().filter {
             it.account == user.id
         }
     }
 
-    suspend fun createZone(user: User, body: ZoneBody, rrsets: Boolean? = null): Zone {
-        val result = zoneService.createZone("localhost", body.copy(account = user.id), rrsets)
+    suspend fun createZone(user: User, serverId: String, body: ZoneBody, rrsets: Boolean? = null): Zone {
+        val result = zoneService.createZone(serverId, body.copy(account = user.id), rrsets)
         return result.getOrThrow()
     }
 
     suspend fun fetchZone(
         user: User,
+        serverId: String,
         zoneId: String,
         rrsets: Boolean? = null,
         rrsetName: String? = null,
         rrsetType: String? = null
     ): Zone {
-        val zone = zoneService.fetchZone("localhost", zoneId, rrsets, rrsetName, rrsetType).getOrThrow()
+        val zone = zoneService.fetchZone(serverId, zoneId, rrsets, rrsetName, rrsetType).getOrThrow()
         require(zone.account == user.id) { "Zone does not belong to user" }
         return zone
     }
 
-    suspend fun updateZone(user: User, zoneId: String, zone: ZoneBody) {
+    suspend fun updateZone(user: User, serverId: String, zoneId: String, zone: ZoneBody) {
         // Check if the zone belongs to the user
-        fetchZone(user, zoneId)
-        return zoneService.updateZone("localhost", zoneId, zone).getOrThrow()
+        fetchZone(user, serverId, zoneId)
+        return zoneService.updateZone(serverId, zoneId, zone).getOrThrow()
     }
 
-    suspend fun deleteZone(user: User, zoneId: String) {
+    suspend fun deleteZone(user: User, serverId: String, zoneId: String) {
         // Check if the zone belongs to the user
-        fetchZone(user, zoneId)
-        return zoneService.deleteZone("localhost", zoneId).getOrThrow()
+        fetchZone(user, serverId, zoneId)
+        return zoneService.deleteZone(serverId, zoneId).getOrThrow()
     }
 
-    suspend fun addRRSet(user: User, zoneId: String, rrset: RRSet) {
+    suspend fun addRRSet(user: User, serverId: String, zoneId: String, rrset: RRSet) {
         // Check if the zone belongs to the user
-        fetchZone(user, zoneId)
-        return zoneService.patchRRSets("localhost", zoneId, listOf(rrset.copy(changetype = null))).getOrThrow()
+        fetchZone(user, serverId, zoneId)
+        return zoneService.patchRRSets(serverId, zoneId, listOf(rrset.copy(changetype = null))).getOrThrow()
     }
 
-    suspend fun updateRRSet(user: User, zoneId: String, rrset: RRSet) {
+    suspend fun updateRRSet(user: User, serverId: String, zoneId: String, rrset: RRSet) {
         // Check if the zone belongs to the user
-        fetchZone(user, zoneId)
-        return zoneService.patchRRSets("localhost", zoneId, listOf(rrset.copy(changetype = ChangeType.REPLACE))).getOrThrow()
+        fetchZone(user, serverId, zoneId)
+        return zoneService.patchRRSets(serverId, zoneId, listOf(rrset.copy(changetype = ChangeType.REPLACE)))
+            .getOrThrow()
     }
 
-    suspend fun deleteRRSet(user: User, zoneId: String, rrset: RRSet) {
+    suspend fun deleteRRSet(user: User, serverId: String, zoneId: String, rrset: RRSet) {
         // Check if the zone belongs to the user
-        fetchZone(user, zoneId)
-        return zoneService.patchRRSets("localhost", zoneId, listOf(rrset.copy(changetype = ChangeType.DELETE))).getOrThrow()
+        fetchZone(user, serverId, zoneId)
+        return zoneService.patchRRSets(serverId, zoneId, listOf(rrset.copy(changetype = ChangeType.DELETE)))
+            .getOrThrow()
     }
 }
