@@ -1,6 +1,6 @@
 package resources
 
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 import kotlinx.serialization.SerialName
 
 /**
