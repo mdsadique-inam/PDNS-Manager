@@ -30,7 +30,7 @@ fun Route.zones() {
     }
     get<Zones.Id> {
         val principal = call.principal<JWTUserPrincipal>()
-        val zone = zoneRepository.fetchZone(principal!!.user, it.parent.parent.serverId, it.zoneId, it.rrsets, it.rrsetName, it.rrsetType)
+        val zone = zoneRepository.fetchZone(principal!!.user, it)
         call.respond(ApiResponse.Success(zone, "Zone retrieved successfully"))
     }
 }
