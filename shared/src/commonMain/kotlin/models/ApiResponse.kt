@@ -24,7 +24,7 @@ sealed class ApiResponse {
     abstract val message: String
 
     @Serializable
-    data class Success<T>(val data: T, override val message: String) : ApiResponse()
+    data class Success<T>(val data: T? = null, override val message: String) : ApiResponse()
 
     @Serializable
     data class Error<T>(
