@@ -41,6 +41,7 @@ kotlin {
             implementation(projects.shared)
             implementation(projects.pdnsClient)
             implementation(libs.bundles.koin.compose)
+            implementation(libs.bundles.precompose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
