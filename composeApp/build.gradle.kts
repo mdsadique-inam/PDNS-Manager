@@ -40,7 +40,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.shared)
             implementation(projects.pdnsClient)
-            implementation(libs.koin)
+            implementation(libs.bundles.koin.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
