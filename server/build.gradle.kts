@@ -27,7 +27,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.logback)
     implementation(libs.bundles.ktor.server)
-    implementation(libs.bundles.koin)
+    implementation(libs.bundles.koin.ktor)
     add("ksp", libs.koin.ksp)
     implementation(libs.postgresql)
     implementation(libs.hikariCP)

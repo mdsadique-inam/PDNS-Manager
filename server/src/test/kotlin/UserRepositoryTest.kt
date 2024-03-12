@@ -7,7 +7,7 @@ import org.koin.core.context.startKoin
 import org.koin.ksp.generated.defaultModule
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import java.util.*
+import java.util.UUID
 import kotlin.test.Test
 
 class UserRepositoryTest : KoinTest {
