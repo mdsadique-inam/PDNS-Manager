@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import moe.tlaster.precompose.PreComposeApp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import org.koin.compose.KoinApplication
+import org.koin.compose.KoinContext
 import pdnsmanager.composeapp.generated.resources.Res
 import pdnsmanager.composeapp.generated.resources.compose_multiplatform
 
@@ -23,9 +23,7 @@ import pdnsmanager.composeapp.generated.resources.compose_multiplatform
 @Composable
 fun App() {
     PreComposeApp {
-        KoinApplication(application = {
-
-        }) {
+        KoinContext {
             MaterialTheme {
                 var showContent by remember { mutableStateOf(false) }
                 val greeting = remember { Greeting().greet() }
@@ -36,7 +34,7 @@ fun App() {
                     AnimatedVisibility(showContent) {
                         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                             Image(painterResource(Res.drawable.compose_multiplatform), null)
-                            Text("Compose: $greeting")
+                            Text("Compose love: $greeting")
                         }
                     }
                 }
