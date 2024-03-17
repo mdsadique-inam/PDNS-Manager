@@ -33,4 +33,10 @@ class UserRepository(private val userService: UserService) {
         }
     }
 
+    suspend fun findByUsernameOrEmail(usernameOrEmail: String): User? {
+        return newSuspendedTransaction {
+            val userEntity = userService.findByUsernameOrEmail(usernameOrEmail)
+            userEntity?.toModel()
+        }
+    }
 }

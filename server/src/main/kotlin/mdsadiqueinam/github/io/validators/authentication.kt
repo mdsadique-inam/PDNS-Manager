@@ -3,11 +3,14 @@ package mdsadiqueinam.github.io.validators
 import mdsadiqueinam.github.io.customPlugins.requestValidation.RequestValidationConfig
 import mdsadiqueinam.github.io.customPlugins.requestValidation.ValidationResult
 import mdsadiqueinam.github.io.extensions.isNotValidEmail
+import mdsadiqueinam.github.io.repositories.UserRepository
 import models.RegisterBody
 import models.ValidatedField
+import org.koin.ktor.ext.inject
 
 fun RequestValidationConfig.validateAuthentication() {
-    validate<RegisterBody> { _, it ->
+    validate<RegisterBody> { call, it ->
+        val userRepository by call.inject<UserRepository>()
         val fields = mutableListOf<ValidatedField>()
 
         it.name.apply {
@@ -25,6 +28,9 @@ fun RequestValidationConfig.validateAuthentication() {
             if (isEmpty()) {
                 fieldErrors.add("Username cannot be empty")
             }
+            userRepository.findByUsernameOrEmail(this)?.let {
+                fieldErrors.add("Username is already taken")
+            }
             if (fieldErrors.isNotEmpty()) {
                 fields.add(ValidatedField(it::username.name, fieldErrors))
             }
@@ -35,11 +41,12 @@ fun RequestValidationConfig.validateAuthentication() {
             if (isEmpty()) {
                 fieldErrors.add("Email cannot be empty")
             }
-
             if (isNotValidEmail()) {
                 fieldErrors.add("Email is not valid")
             }
-
+            userRepository.findByUsernameOrEmail(this)?.let {
+                fieldErrors.add("Email is already taken")
+            }
             if (fieldErrors.isNotEmpty()) {
                 fields.add(ValidatedField(it::email.name, fieldErrors))
             }
