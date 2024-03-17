@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -27,11 +26,7 @@ kotlin {
         binaries.executable()
     }
 
-    jvm("desktop")
-
     sourceSets {
-        val desktopMain by getting
-
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -40,24 +35,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.shared)
             implementation(projects.pdnsClient)
+            implementation(libs.compottie)
             implementation(libs.bundles.koin.compose)
             implementation(libs.bundles.precompose)
-        }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-        }
-    }
-}
-
-
-compose.desktop {
-    application {
-        mainClass = "MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "mdsadiqueinam.github.io"
-            packageVersion = "1.0.0"
         }
     }
 }

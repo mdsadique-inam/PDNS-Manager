@@ -1,7 +1,7 @@
 [versions]
-compose = "1.6.0"
+compose = "1.6.1"
 junit = "4.13.2"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 kotlinx-serialization = "1.6.3"
 coroutines = "1.8.0"
 ktor = "2.3.9"
@@ -13,11 +13,12 @@ ehcache = "3.10.8"
 logback = "1.4.14"
 koin = "3.6.0-wasm-alpha2"
 koin-ksp = "1.3.1"
-ksp = "1.9.22-1.0.16"
+ksp = "1.9.23-1.0.19"
 precompose = "1.6.0-rc02"
 napier = "2.7.1"
 kotlinx-datetime = "0.5.0"
 spring = "6.2.1"
+compottie = "1.1.1"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
@@ -35,6 +36,7 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
 spring-security-crypto = { module = "org.springframework.security:spring-security-crypto", version.ref = "spring" }
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 
 # Ktor client
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
