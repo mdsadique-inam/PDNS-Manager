@@ -1,5 +1,8 @@
 package mdsadiqueinam.github.io.database.tables
 
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import models.User
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
@@ -13,7 +16,7 @@ object Users : UUIDTable() {
     val username = varchar("username", length = 250).uniqueIndex()
     val email = varchar("email", length = 250).uniqueIndex()
     val password = varchar("password", length = 250)
-    val createdAt = datetime("created_at")
+    val createdAt = datetime("created_at").clientDefault { Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) }
     val updatedAt = datetime("updated_at").nullable()
 }
 

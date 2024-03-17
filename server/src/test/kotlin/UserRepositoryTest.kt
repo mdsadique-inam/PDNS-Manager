@@ -3,8 +3,6 @@ import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.test.runTest
 import mdsadiqueinam.github.io.repositories.UserRepository
 import org.jetbrains.exposed.sql.Database
-import org.koin.core.context.startKoin
-import org.koin.ksp.generated.defaultModule
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import java.util.UUID
@@ -24,9 +22,6 @@ class UserRepositoryTest : KoinTest {
         Database.connect(
             datasource = datasource,
         )
-        startKoin {
-            modules(defaultModule)
-        }
     }
 
     @Test

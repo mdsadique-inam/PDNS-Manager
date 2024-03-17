@@ -32,7 +32,7 @@ dependencies {
     implementation(libs.postgresql)
     implementation(libs.hikariCP)
     implementation(libs.bundles.exposed)
-    implementation(libs.spring.security.crypto)
+    implementation(libs.bundles.security)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlinx.coroutines.test)

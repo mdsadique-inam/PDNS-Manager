@@ -11,7 +11,7 @@ import io.ktor.server.resources.post
 import io.ktor.server.resources.put
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
-import mdsadiqueinam.github.io.plugins.JWTUserPrincipal
+import mdsadiqueinam.github.io.plugins.UserPrincipal
 import mdsadiqueinam.github.io.repositories.ZoneRepository
 import mdsadiqueinam.github.io.resources.RRSets
 import models.ApiResponse
@@ -23,34 +23,34 @@ import resources.Zones
 fun Route.zones() {
     val zoneRepository by inject<ZoneRepository>()
     get<Zones> {
-        val principal = call.principal<JWTUserPrincipal>()
+        val principal = call.principal<UserPrincipal>()
         val zones = zoneRepository.fetchZones(principal!!.user, it)
         call.respond(ApiResponse.Success(zones, "Zones retrieved successfully"))
     }
     post<Zones> {
-        val principal = call.principal<JWTUserPrincipal>()
+        val principal = call.principal<UserPrincipal>()
         val body = call.receive<ZoneBody>()
         val zone = zoneRepository.createZone(principal!!.user, body, it)
         call.respond(HttpStatusCode.Created, ApiResponse.Success(zone, "Zone created successfully"))
     }
     get<Zones.Id> {
-        val principal = call.principal<JWTUserPrincipal>()
+        val principal = call.principal<UserPrincipal>()
         val zone = zoneRepository.fetchZone(principal!!.user, it)
         call.respond(ApiResponse.Success(zone, "Zone retrieved successfully"))
     }
     put<Zones.Id> {
-        val principal = call.principal<JWTUserPrincipal>()
+        val principal = call.principal<UserPrincipal>()
         val body = call.receive<ZoneBody>()
         zoneRepository.updateZone(principal!!.user, it, body)
         call.respond(HttpStatusCode.NoContent, ApiResponse.Success(null, "Zone updated successfully"))
     }
     delete<Zones.Id> {
-        val principal = call.principal<JWTUserPrincipal>()
+        val principal = call.principal<UserPrincipal>()
         zoneRepository.deleteZone(principal!!.user, it)
         call.respond(HttpStatusCode.NoContent, ApiResponse.Success(null, "Zone deleted successfully"))
     }
     patch<RRSets> {
-        val principal = call.principal<JWTUserPrincipal>()
+        val principal = call.principal<UserPrincipal>()
         val rrset = call.receive<RRSet>()
         when (it.action) {
             RRSets.RRSetsAction.ADD -> zoneRepository.addRRSet(principal!!.user, it.parent, rrset)

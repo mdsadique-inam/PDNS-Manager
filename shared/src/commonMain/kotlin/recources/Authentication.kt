@@ -1,12 +1,12 @@
 package recources
 
-import io.ktor.resources.*
+import io.ktor.resources.Resource
 
 @Resource("/register")
-class Register {
-}
+class Register
 
 @Resource("/login")
-class Login {
+class Login
 
-}
+@Resource("/account")
+class Account

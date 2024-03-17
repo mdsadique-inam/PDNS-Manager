@@ -7,7 +7,6 @@ import mdsadiqueinam.github.io.database.services.UserService
 import mdsadiqueinam.github.io.extensions.toUUID
 import models.User
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
-import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.core.annotation.Single
 
 @Single
