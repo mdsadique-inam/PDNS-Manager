@@ -14,7 +14,6 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.LottieConstants
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import pdnsmanager.composeapp.generated.resources.Res
 import ui.state.rememberRawResource
 
@@ -26,8 +25,6 @@ fun SplashScreen() {
     ) { InternetLoader() }
 }
 
-
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun InternetLoader() {
     val bytes by rememberRawResource(Res.raw.internet_loader)

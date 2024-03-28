@@ -27,17 +27,26 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings {
+                optIn("androidx.compose.material3.ExperimentalMaterial3Api")
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
+            implementation(compose.components.uiToolingPreview)
             implementation(compose.components.resources)
             implementation(projects.shared)
             implementation(projects.pdnsClient)
             implementation(libs.compottie)
             implementation(libs.bundles.koin.compose)
-            implementation(libs.bundles.precompose)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.navigation.compose)
         }
     }
 }
