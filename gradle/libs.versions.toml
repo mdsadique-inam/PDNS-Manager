@@ -1,4 +1,5 @@
 [versions]
+agp = "8.2.0"
 compose = "0.0.0-nav-dev1547"
 junit = "4.13.2"
 kotlin = "1.9.23"
@@ -149,6 +150,8 @@ exposed = [
 ]
 
 [plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }

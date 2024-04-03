@@ -19,7 +19,7 @@ dependencyResolutionManagement {
         maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
     }
 }
-
+include(":koin-compose")
 include(":composeApp")
 include(":server")
 include(":pdnsClient")

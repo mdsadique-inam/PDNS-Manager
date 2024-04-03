@@ -43,8 +43,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.shared)
             implementation(projects.pdnsClient)
-            implementation(libs.compottie)
-            implementation(libs.bundles.koin.compose)
+            implementation(projects.koinCompose)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.navigation.compose)
         }
