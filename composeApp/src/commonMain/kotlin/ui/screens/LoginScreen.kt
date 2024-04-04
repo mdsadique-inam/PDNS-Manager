@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -18,9 +19,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import org.koin.compose.viewModel.koinViewModel
+import ui.viewModels.LoginViewModel
 
 @Composable
 fun LoginScreen() {
+    val viewModel = koinViewModel(LoginViewModel::class)
     val scrollState = rememberScrollState()
     Box(
         modifier = Modifier.fillMaxSize().scrollable(scrollState, orientation = Orientation.Vertical),
@@ -35,17 +42,21 @@ fun LoginScreen() {
                 Spacer(modifier = Modifier.height(40.dp))
                 OutlinedTextField(
                     modifier = Modifier.width(340.dp),
-                    value = "",
-                    onValueChange = {},
+                    value = viewModel.uid.value,
+                    onValueChange = { viewModel.setUid(it) },
                     label = { Text("Username Or Email") }
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
                     modifier = Modifier.width(340.dp),
-                    value = "",
-                    onValueChange = {},
+                    value = viewModel.password.value,
+                    onValueChange = { viewModel.setPassword(it) },
                     label = { Text("Password") }
                 )
+                Spacer(modifier = Modifier.height(10.dp))
+                ElevatedButton(onClick = { /*TODO*/ }) {
+                    Text("Login ${viewModel.uid.value} ${viewModel.password.value}")
+                }
             }
         }
     }

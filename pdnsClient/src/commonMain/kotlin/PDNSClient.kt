@@ -23,7 +23,7 @@ object PDNSClient {
 //                }
 //                level = LogLevel.HEADERS
             }
-            apply(block)
+            block()
         }
     }
 }

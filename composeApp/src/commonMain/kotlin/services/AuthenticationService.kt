@@ -17,12 +17,4 @@ class AuthenticationService(private val client: HttpClient) {
         }
         return response.process<LoginResponse, String>()
     }
-
-    suspend fun register(uid: String, password: String): Boolean {
-        val res = login(LoginBody(uid, password))
-        return when(res) {
-            is ApiResponse.Error -> true
-            is ApiResponse.Success -> true
-        }
-    }
 }

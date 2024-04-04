@@ -17,6 +17,7 @@ import org.koin.compose.currentKoinScope
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.qualifier.Qualifier
 import org.koin.core.scope.Scope
+import kotlin.reflect.KClass
 
 
 /**
@@ -28,6 +29,7 @@ import org.koin.core.scope.Scope
  */
 @Composable
 inline fun <reified VM : ViewModel> koinNavViewModel(
+    modelClass: KClass<VM>,
     qualifier: Qualifier? = null,
     viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
         "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
@@ -38,7 +40,7 @@ inline fun <reified VM : ViewModel> koinNavViewModel(
     noinline parameters: ParametersDefinition? = null,
 ): VM {
     return resolveViewModel(
-        VM::class, viewModelStoreOwner.viewModelStore, key, extras, qualifier, scope, parameters
+        modelClass, viewModelStoreOwner.viewModelStore, key, extras, qualifier, scope, parameters
     )
 }
 
