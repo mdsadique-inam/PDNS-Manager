@@ -106,6 +106,7 @@ private fun Koin.warnNoContext() {
  * @author Arnaud Giuliani
  */
 @Composable
+@Suppress("DEPRECATED")
 @Throws(ApplicationAlreadyStartedException::class)
 fun KoinApplication(
     application: KoinAppDeclaration,

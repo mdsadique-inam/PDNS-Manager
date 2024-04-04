@@ -20,6 +20,7 @@ class ComposeParametersHolder(
         return createSavedStateHandleOrElse(clazz) { super.getOrNull(clazz) }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun <T> createSavedStateHandleOrElse(clazz: KClass<*>, block: () -> T): T {
         return if (clazz == SavedStateHandle::class) {
             extras.createSavedStateHandle() as T
