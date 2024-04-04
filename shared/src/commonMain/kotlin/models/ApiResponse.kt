@@ -20,17 +20,17 @@ data class ValidatedField(
 }
 
 @Serializable
-sealed class ApiResponse {
+sealed class ApiResponse<out S, out E> {
     abstract val message: String
 
     @Serializable
-    data class Success<T>(val data: T? = null, override val message: String) : ApiResponse()
+    data class Success<S>(val data: S? = null, override val message: String) : ApiResponse<S, Nothing>()
 
     @Serializable
-    data class Error<T>(
+    data class Error<E>(
         override val statusCode: Int,
         override val message: String,
         override val code: String,
-        override val errors: List<T>? = null
-    ) : ApiResponse(), ApiResponseError<T>
+        override val errors: List<E>? = null
+    ) : ApiResponse<Nothing, E>(), ApiResponseError<E>
 }
