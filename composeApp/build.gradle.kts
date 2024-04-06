@@ -42,6 +42,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.uiToolingPreview)
             implementation(compose.components.resources)
+            implementation(compose.materialIconsExtended)
             implementation(projects.shared)
             implementation(projects.pdnsClient)
             implementation(projects.koinCompose)
