@@ -90,11 +90,11 @@ fun LoginScreen() {
 					modifier = Modifier.pointerHoverIcon(
 						icon = PointerIcon.Hand
 					),
-					onClick = { /*TODO*/ },
+					onClick = { viewModel.login() },
 					enabled = !uiState.isLoading
 				) {
 					if (uiState.isLoading) {
-						CircularProgressIndicator(modifier = Modifier.width(32.dp))
+						CircularProgressIndicator()
 					} else {
 						Text("Login", style = MaterialTheme.typography.bodyLarge)
 					}

@@ -29,7 +29,7 @@ class ZoneServiceTest {
             name = "sadique.dev.",
             nameservers = listOf("ns1.sadique.dev.", "ns2.sadique.dev."),
         )
-        val result = zoneService.createZone("localhost", zone)
+        val result = zoneService.createZone(serverId = "localhost", body = zone)
         assertTrue(result.isSuccess)
     }
 
