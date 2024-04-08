@@ -8,7 +8,10 @@ import io.ktor.client.request.setBody
 import models.ApiResponse
 import models.LoginBody
 import models.LoginResponse
+import models.RegisterBody
+import models.ValidatedField
 import recources.Login
+import recources.Register
 
 class AuthenticationService(private val client: HttpClient) {
     suspend fun login(body: LoginBody): ApiResponse<LoginResponse, String> {
@@ -16,5 +19,12 @@ class AuthenticationService(private val client: HttpClient) {
             setBody(body)
         }
         return response.process<LoginResponse, String>()
+    }
+
+    suspend fun register(body: RegisterBody): ApiResponse<LoginResponse, ValidatedField> {
+        val response = client.post(Register()) {
+            setBody(body)
+        }
+        return response.process<LoginResponse, ValidatedField>()
     }
 }

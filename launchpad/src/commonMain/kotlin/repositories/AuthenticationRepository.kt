@@ -2,6 +2,9 @@ package repositories
 
 import models.ApiResponse
 import models.LoginBody
+import models.LoginResponse
+import models.RegisterBody
+import models.ValidatedField
 import services.AuthenticationService
 
 class AuthenticationRepository(private val authenticationService: AuthenticationService) {
@@ -15,6 +18,14 @@ class AuthenticationRepository(private val authenticationService: Authentication
                 Result.failure(Throwable(response.message))
             }
         }
+    }
+
+    suspend fun register(body: RegisterBody): Result<ApiResponse<LoginResponse, ValidatedField>> = kotlin.runCatching{
+	    val response = authenticationService.register(body)
+	    if (response is ApiResponse.Success) {
+			redirectToApp()
+	    }
+	    return Result.success(response)
     }
 }
 

@@ -33,7 +33,7 @@ fun PMApp(navController: NavHostController = rememberNavController()) {
 	Scaffold { innerPadding ->
 		NavHost(
 			navController = navController,
-			startDestination = Screen.Register.route,
+			startDestination = Screen.Login.route,
 			modifier = Modifier
 				.fillMaxSize()
 				.verticalScroll(rememberScrollState())

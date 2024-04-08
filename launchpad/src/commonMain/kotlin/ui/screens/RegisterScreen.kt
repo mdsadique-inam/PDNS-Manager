@@ -1,13 +1,18 @@
 package ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,9 +25,11 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewModel.koinViewModel
 import pdnsmanager.launchpad.generated.resources.Res
 import pdnsmanager.launchpad.generated.resources.already_have_an_account_login
+import pdnsmanager.launchpad.generated.resources.confirm_password
 import pdnsmanager.launchpad.generated.resources.create_an_account_in_powerdns_manager
 import pdnsmanager.launchpad.generated.resources.email
 import pdnsmanager.launchpad.generated.resources.full_name
+import pdnsmanager.launchpad.generated.resources.icon_warning
 import pdnsmanager.launchpad.generated.resources.password
 import pdnsmanager.launchpad.generated.resources.signup
 import pdnsmanager.launchpad.generated.resources.username
@@ -55,12 +62,28 @@ fun RegisterScreen(
 					)
 					Spacer(modifier = Modifier.height(40.dp))
 
+					if (uiState.error != null) {
+						Row(
+							modifier = Modifier.padding(8.dp),
+							horizontalArrangement = Arrangement.Center,
+							verticalAlignment = Alignment.CenterVertically
+						) {
+							Icon(Icons.Filled.Warning, contentDescription = stringResource(Res.string.icon_warning), tint = MaterialTheme.colorScheme.error)
+							Spacer(modifier = Modifier.width(5.dp))
+							Text(
+								text = uiState.error ?: "",
+								style = MaterialTheme.typography.bodyMedium,
+								color = MaterialTheme.colorScheme.error
+							)
+						}
+					}
+
 					PMCOutlinedTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.name,
 						onValueChange = { viewModel.setName(it) },
 						label = { Text(stringResource(Res.string.full_name)) },
-						error = uiState.nameErrors?.get(0)
+						error = uiState.nameErrors?.get(0),
 					)
 					Spacer(modifier = Modifier.height(10.dp))
 					PMCOutlinedTextField(
@@ -68,7 +91,7 @@ fun RegisterScreen(
 						value = uiState.username,
 						onValueChange = { viewModel.setUsername(it) },
 						label = { Text(stringResource(Res.string.username)) },
-						error = uiState.usernameErrors?.get(0)
+						error = uiState.usernameErrors?.get(0),
 					)
 					Spacer(modifier = Modifier.height(10.dp))
 					PMCOutlinedTextField(
@@ -76,7 +99,7 @@ fun RegisterScreen(
 						value = uiState.email,
 						onValueChange = { viewModel.setEmail(it) },
 						label = { Text(stringResource(Res.string.email)) },
-						error = uiState.emailErrors?.get(0)
+						error = uiState.emailErrors?.get(0),
 					)
 					Spacer(modifier = Modifier.height(10.dp))
 					PMCPasswordTextField(
@@ -84,9 +107,19 @@ fun RegisterScreen(
 						value = uiState.password,
 						onValueChange = { viewModel.setPassword(it) },
 						label = { Text(stringResource(Res.string.password)) },
-						error = uiState.passwordErrors?.get(0)
+						error = uiState.passwordErrors?.get(0),
 					)
 					Spacer(modifier = Modifier.height(10.dp))
+					PMCPasswordTextField(
+						modifier = Modifier.width(340.dp),
+						value = uiState.confirmPassword,
+						onValueChange = { viewModel.setConfirmPassword(it) },
+						label = { Text(stringResource(Res.string.confirm_password)) },
+						error = uiState.confirmPasswordErrors?.get(0),
+					)
+					Spacer(modifier = Modifier.height(10.dp))
+
+
 					PMCButton(
 						onClick = { viewModel.register() },
 						enabled = !uiState.isLoading,

@@ -3,6 +3,8 @@ package ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Visibility
@@ -17,8 +19,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.resources.stringResource
@@ -45,8 +55,16 @@ fun PMCOutlinedTextField(
 	isError: Boolean = error != null,
 	visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
+	val focusManager = LocalFocusManager.current
 	OutlinedTextField(
-		modifier = modifier,
+		modifier = modifier.onPreviewKeyEvent {
+			if (it.key == Key.Tab && it.type == KeyEventType.KeyDown){
+				focusManager.moveFocus(FocusDirection.Down)
+				true
+			} else {
+				false
+			}
+		},
 		value = value,
 		onValueChange = onValueChange,
 		label = label,
@@ -81,7 +99,11 @@ fun PMCOutlinedTextField(
 				supportingText?.invoke()
 			}
 		},
-		visualTransformation = visualTransformation
+		visualTransformation = visualTransformation,
+		keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+		keyboardActions = KeyboardActions(
+			onNext = { focusManager.moveFocus(FocusDirection.Down) }
+		)
 	)
 }
 
