@@ -14,16 +14,12 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerIcon
-import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewModel.koinViewModel
@@ -34,9 +30,10 @@ import pdnsmanager.launchpad.generated.resources.login
 import pdnsmanager.launchpad.generated.resources.login_to_powerdns_manager
 import pdnsmanager.launchpad.generated.resources.password
 import pdnsmanager.launchpad.generated.resources.username_or_email
-import ui.components.PDNSButton
-import ui.components.PDNSTextButton
-import ui.components.PasswordTextField
+import ui.components.PMCButton
+import ui.components.PMCOutlinedTextField
+import ui.components.PMCPasswordTextField
+import ui.components.PMCTextButton
 import ui.viewModels.LoginViewModel
 
 @Composable
@@ -69,7 +66,7 @@ fun LoginScreen(
 							horizontalArrangement = Arrangement.Center,
 							verticalAlignment = Alignment.CenterVertically
 						) {
-							Icon(Icons.Filled.Warning, contentDescription = stringResource(Res.string.icon_warning))
+							Icon(Icons.Filled.Warning, contentDescription = stringResource(Res.string.icon_warning), tint = MaterialTheme.colorScheme.error)
 							Spacer(modifier = Modifier.width(5.dp))
 							Text(
 								text = uiState.error ?: "",
@@ -79,7 +76,7 @@ fun LoginScreen(
 						}
 					}
 
-					OutlinedTextField(
+					PMCOutlinedTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.uid,
 						onValueChange = { viewModel.setUid(it) },
@@ -87,7 +84,7 @@ fun LoginScreen(
 						isError = uiState.isError
 					)
 					Spacer(modifier = Modifier.height(10.dp))
-					PasswordTextField(
+					PMCPasswordTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.password,
 						onValueChange = { viewModel.setPassword(it) },
@@ -95,7 +92,7 @@ fun LoginScreen(
 						isError = uiState.isError
 					)
 					Spacer(modifier = Modifier.height(10.dp))
-					PDNSButton(
+					PMCButton(
 						onClick = { viewModel.login() },
 						enabled = !uiState.isLoading,
 						loading = uiState.isLoading
@@ -105,7 +102,7 @@ fun LoginScreen(
 				}
 
 				Spacer(modifier = Modifier.height(15.dp))
-				PDNSTextButton(
+				PMCTextButton(
 					onClick = navigateToRegister,
 				) {
 					Text(stringResource(Res.string.dont_have_an_account_create_one))

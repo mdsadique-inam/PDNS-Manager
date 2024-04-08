@@ -15,21 +15,21 @@ import org.koin.compose.KoinContext
 import ui.screens.LoginScreen
 import ui.screens.RegisterScreen
 import ui.screens.Screen
-import ui.theme.PDNSTheme
+import ui.theme.PMTheme
 
 @Composable
 fun App() {
 	KoinContext {
-		PDNSTheme {
+		PMTheme {
 			Surface(tonalElevation = 5.dp) {
-				PDNSApp()
+				PMApp()
 			}
 		}
 	}
 }
 
 @Composable
-fun PDNSApp(navController: NavHostController = rememberNavController()) {
+fun PMApp(navController: NavHostController = rememberNavController()) {
 	Scaffold { innerPadding ->
 		NavHost(
 			navController = navController,

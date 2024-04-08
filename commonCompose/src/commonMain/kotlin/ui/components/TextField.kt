@@ -1,14 +1,21 @@
 package ui.components
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
@@ -16,8 +23,68 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.resources.stringResource
 import pdnsmanager.commoncompose.generated.resources.Res
+import pdnsmanager.commoncompose.generated.resources.error
 import pdnsmanager.commoncompose.generated.resources.hide_password
 import pdnsmanager.commoncompose.generated.resources.show_password
+
+@Composable
+fun PMCOutlinedTextField(
+	value: String,
+	onValueChange: (String) -> Unit,
+	modifier: Modifier = Modifier,
+	enabled: Boolean = true,
+	readOnly: Boolean = false,
+	label: @Composable (() -> Unit)? = null,
+	placeholder: @Composable (() -> Unit)? = null,
+	leadingIcon: @Composable (() -> Unit)? = null,
+	trailingIcon: @Composable (() -> Unit)? = null,
+	prefix: @Composable (() -> Unit)? = null,
+	suffix: @Composable (() -> Unit)? = null,
+	supportingText: @Composable (() -> Unit)? = null,
+	error: String? = null,
+	isError: Boolean = error != null,
+	visualTransformation: VisualTransformation = VisualTransformation.None,
+) {
+	OutlinedTextField(
+		modifier = modifier,
+		value = value,
+		onValueChange = onValueChange,
+		label = label,
+		enabled = enabled,
+		readOnly = readOnly,
+		isError = isError,
+		placeholder = placeholder,
+		leadingIcon = leadingIcon,
+		trailingIcon = {
+			Row(
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				if (isError) {
+					Icon(Icons.Filled.Error, "error", tint = MaterialTheme.colorScheme.error)
+				}
+				trailingIcon?.invoke()
+			}
+		},
+		prefix = prefix,
+		suffix = suffix,
+		supportingText = {
+			Column(
+				horizontalAlignment = Alignment.Start
+			) {
+				if (isError && error != null) {
+					Text(
+						modifier = Modifier.fillMaxWidth(),
+						text = error,
+						color = MaterialTheme.colorScheme.error
+					)
+				}
+				supportingText?.invoke()
+			}
+		},
+		visualTransformation = visualTransformation
+	)
+}
+
 
 sealed class FieldVisibility(
 	val visualTransformation: VisualTransformation,
@@ -39,20 +106,22 @@ sealed class FieldVisibility(
 }
 
 @Composable
-fun PasswordTextField(
+fun PMCPasswordTextField(
 	value: String,
 	onValueChange: (String) -> Unit,
 	label: @Composable (() -> Unit)? = null,
 	modifier: Modifier = Modifier,
-	isError: Boolean = false,
+	error: String? = null,
+	isError: Boolean = error != null,
 ) {
 	val visibility = remember { mutableStateOf<FieldVisibility>(FieldVisibility.Hidden) }
-	OutlinedTextField(
+	PMCOutlinedTextField(
 		value = value,
 		onValueChange = onValueChange,
 		label = label,
 		modifier = modifier,
 		isError = isError,
+		error = error,
 		trailingIcon = {
 			IconButton(
 				onClick = {
