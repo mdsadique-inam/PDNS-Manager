@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewModel.koinViewModel
 import pdnsmanager.composeapp.generated.resources.Res
+import pdnsmanager.composeapp.generated.resources.create_an_account_in_powerdns_manager
 import pdnsmanager.composeapp.generated.resources.dont_have_an_account_create_one
 import pdnsmanager.composeapp.generated.resources.icon_warning
 import pdnsmanager.composeapp.generated.resources.login
@@ -38,8 +39,8 @@ import ui.components.PasswordTextField
 import ui.viewModels.LoginViewModel
 
 @Composable
-fun LoginScreen(
-	navigateToRegister: () -> Unit,
+fun RegisterScreen(
+	navigateToLogin: () -> Unit
 ) {
 	val viewModel = koinViewModel(LoginViewModel::class)
 	val uiState by viewModel.uiState.collectAsState()
@@ -55,7 +56,7 @@ fun LoginScreen(
 					horizontalAlignment = Alignment.CenterHorizontally
 				) {
 					Text(
-						stringResource(Res.string.login_to_powerdns_manager),
+						stringResource(Res.string.create_an_account_in_powerdns_manager),
 						style = MaterialTheme.typography.headlineLarge
 					)
 					Spacer(modifier = Modifier.height(40.dp))
@@ -110,8 +111,8 @@ fun LoginScreen(
 
 				Spacer(modifier = Modifier.height(15.dp))
 				TextButton(
-					onClick = navigateToRegister,
-					modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand)
+					onClick = navigateToLogin,
+					modifier = Modifier.padding(start = 25.dp).pointerHoverIcon(icon = PointerIcon.Hand)
 				) {
 					Text(stringResource(Res.string.dont_have_an_account_create_one))
 				}
