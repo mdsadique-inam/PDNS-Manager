@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -32,17 +30,15 @@ import org.koin.compose.viewModel.koinViewModel
 import pdnsmanager.launchpad.generated.resources.Res
 import pdnsmanager.launchpad.generated.resources.already_have_an_account_login
 import pdnsmanager.launchpad.generated.resources.create_an_account_in_powerdns_manager
-import pdnsmanager.launchpad.generated.resources.dont_have_an_account_create_one
 import pdnsmanager.launchpad.generated.resources.email
 import pdnsmanager.launchpad.generated.resources.full_name
 import pdnsmanager.launchpad.generated.resources.icon_warning
-import pdnsmanager.launchpad.generated.resources.login
-import pdnsmanager.launchpad.generated.resources.login_to_powerdns_manager
 import pdnsmanager.launchpad.generated.resources.password
 import pdnsmanager.launchpad.generated.resources.signup
 import pdnsmanager.launchpad.generated.resources.username
+import ui.components.PDNSButton
+import ui.components.PDNSTextButton
 import ui.components.PasswordTextField
-import ui.viewModels.LoginViewModel
 import ui.viewModels.RegisterViewModel
 
 @Composable
@@ -117,25 +113,18 @@ fun RegisterScreen(
 						isError = uiState.isError
 					)
 					Spacer(modifier = Modifier.height(10.dp))
-					Button(
-						modifier = Modifier.pointerHoverIcon(
-							icon = PointerIcon.Hand
-						),
+					PDNSButton(
 						onClick = { viewModel.register() },
-						enabled = !uiState.isLoading
+						enabled = !uiState.isLoading,
+						loading = uiState.isLoading
 					) {
-						if (uiState.isLoading) {
-							CircularProgressIndicator()
-						} else {
-							Text(stringResource(Res.string.signup), style = MaterialTheme.typography.bodyLarge)
-						}
+						Text(stringResource(Res.string.signup), style = MaterialTheme.typography.bodyLarge)
 					}
 				}
 
 				Spacer(modifier = Modifier.height(15.dp))
-				TextButton(
+				PDNSTextButton(
 					onClick = navigateToLogin,
-					modifier = Modifier.padding(start = 25.dp).pointerHoverIcon(icon = PointerIcon.Hand)
 				) {
 					Text(stringResource(Res.string.already_have_an_account_login))
 				}

@@ -9,9 +9,11 @@ plugins {
 kotlin {
 	@OptIn(ExperimentalWasmDsl::class)
 	wasmJs {
-		moduleName = "commonCompose"
+		browser()
+		nodejs()
 		binaries.executable()
 	}
+	applyDefaultHierarchyTemplate()
 
 	sourceSets {
 		all {

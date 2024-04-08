@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -36,6 +34,8 @@ import pdnsmanager.launchpad.generated.resources.login
 import pdnsmanager.launchpad.generated.resources.login_to_powerdns_manager
 import pdnsmanager.launchpad.generated.resources.password
 import pdnsmanager.launchpad.generated.resources.username_or_email
+import ui.components.PDNSButton
+import ui.components.PDNSTextButton
 import ui.components.PasswordTextField
 import ui.viewModels.LoginViewModel
 
@@ -95,25 +95,18 @@ fun LoginScreen(
 						isError = uiState.isError
 					)
 					Spacer(modifier = Modifier.height(10.dp))
-					Button(
-						modifier = Modifier.pointerHoverIcon(
-							icon = PointerIcon.Hand
-						),
+					PDNSButton(
 						onClick = { viewModel.login() },
-						enabled = !uiState.isLoading
+						enabled = !uiState.isLoading,
+						loading = uiState.isLoading
 					) {
-						if (uiState.isLoading) {
-							CircularProgressIndicator()
-						} else {
-							Text(stringResource(Res.string.login), style = MaterialTheme.typography.bodyLarge)
-						}
+						Text(stringResource(Res.string.login), style = MaterialTheme.typography.bodyLarge)
 					}
 				}
 
 				Spacer(modifier = Modifier.height(15.dp))
-				TextButton(
+				PDNSTextButton(
 					onClick = navigateToRegister,
-					modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand)
 				) {
 					Text(stringResource(Res.string.dont_have_an_account_create_one))
 				}
