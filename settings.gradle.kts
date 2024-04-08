@@ -20,7 +20,8 @@ dependencyResolutionManagement {
     }
 }
 include(":koin-compose")
-include(":composeApp")
+include(":commonCompose")
+include(":launchpad")
 include(":server")
 include(":pdnsClient")
 include(":shared")
