@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -25,15 +24,12 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.input.pointer.PointerIcon
-import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.resources.stringResource
 import pdnsmanager.commoncompose.generated.resources.Res
-import pdnsmanager.commoncompose.generated.resources.error
 import pdnsmanager.commoncompose.generated.resources.hide_password
 import pdnsmanager.commoncompose.generated.resources.show_password
 
@@ -58,7 +54,7 @@ fun PMCOutlinedTextField(
 	val focusManager = LocalFocusManager.current
 	OutlinedTextField(
 		modifier = modifier.onPreviewKeyEvent {
-			if (it.key == Key.Tab && it.type == KeyEventType.KeyDown){
+			if (it.key == Key.Tab && it.type == KeyEventType.KeyDown) {
 				focusManager.moveFocus(FocusDirection.Down)
 				true
 			} else {
@@ -145,7 +141,7 @@ fun PMCPasswordTextField(
 		isError = isError,
 		error = error,
 		trailingIcon = {
-			IconButton(
+			PMCIconButton(
 				onClick = {
 					if (visibility.value == FieldVisibility.Hidden) {
 						visibility.value = FieldVisibility.Visible
@@ -153,7 +149,6 @@ fun PMCPasswordTextField(
 						visibility.value = FieldVisibility.Hidden
 					}
 				},
-				modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
 			) {
 				visibility.value.icon()
 			}
