@@ -22,6 +22,7 @@ dependencyResolutionManagement {
 include(":koin-compose")
 include(":commonCompose")
 include(":launchpad")
+include(":app")
 include(":server")
 include(":pdnsClient")
 include(":shared")

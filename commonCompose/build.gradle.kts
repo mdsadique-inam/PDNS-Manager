@@ -44,3 +44,9 @@ kotlin {
 compose.experimental {
 	web.application {}
 }
+
+compose.resources {
+	publicResClass = true
+	packageOfResClass = "pdnsmanager.commoncompose.resources"
+	generateResClass = auto
+}
