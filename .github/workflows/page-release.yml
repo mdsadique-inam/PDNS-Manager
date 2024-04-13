@@ -34,7 +34,7 @@ jobs:
           ls -l ..
           git config user.name "md sadique inam"  # Replace with your name
           git config user.email "md.sadique32@gmail.com"  # Replace with your email
-          mv ./wasmJs/* ./docs/  # Move extracted assets to /docs folder
+          mv ../PDNS-Manager/wasmJs/* ./docs/  # Move extracted assets to /docs folder
           git add docs/  # Add the /docs folder to Git
           git commit -m "Update Wasm assets from build"
           git push main  # Push the new branch
