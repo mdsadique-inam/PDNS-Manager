@@ -47,6 +47,6 @@ compose.experimental {
 
 compose.resources {
 	publicResClass = true
-	packageOfResClass = "pdnsmanager.commoncompose.resources"
+	packageOfResClass = "pdnsmanager.commonCompose.resources"
 	generateResClass = auto
 }

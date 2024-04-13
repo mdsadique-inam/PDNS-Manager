@@ -6,7 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import pdnsmanager.commoncompose.generated.resources.Res
+import pdnsmanager.commonCompose.resources.Res
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable

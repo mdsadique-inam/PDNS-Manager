@@ -1,0 +1,39 @@
+name: Build and Push Wasm Assets
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest  # Adjust OS if needed
+    steps:
+      - uses: actions/checkout@v4  # Checkout the source code
+
+      - name: Run Gradle Build
+        run: ./gradlew :launchpad:wasmJsBrowserProductionWebpack
+
+      - name: Extract Wasm Assets
+        run: |
+          # Assuming launchpad/build/dist/wasmJs/productionExecutable exists after build
+          mkdir -p ./wasmJs  # Create a folder to store extracted assets locally
+          cp -r launchpad/build/dist/wasmJs/productionExecutable/* ./wasmJs/
+
+      - name: Checkout Destination Repo (shallow clone)
+        uses: actions/checkout@v4  # Checkout the destination repository (shallow clone)
+        with:
+          repository: https://github.com/mdsadique-inam/launchpad
+          ref: main  # Adjust branch if needed
+          token: ${{ secrets.PUSH_TOKEN }}  # Use a secret for access token
+          fetch-depth: 1  # Only download the latest commit for efficiency
+
+      - name: Push Wasm Assets to /docs
+        run: |
+          git config user.name "mdsadique-inam"  # Replace with your name
+          git config user.email "md.sadique32@gmail.com"  # Replace with your email
+          git checkout -b main  # Create a new branch (replace with desired branch)
+          mv ./wasmJs/* ./docs/  # Move extracted assets to /docs folder
+          git add docs/  # Add the /docs folder to Git
+          git commit -m "Update Wasm assets from build"
+          git push origin main  # Push the new branch
+

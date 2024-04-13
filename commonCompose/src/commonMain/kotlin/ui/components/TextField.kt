@@ -29,10 +29,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.resources.stringResource
-import pdnsmanager.commoncompose.resources.Res
-import pdnsmanager.commoncompose.resources.error
-import pdnsmanager.commoncompose.resources.hide_password
-import pdnsmanager.commoncompose.resources.show_password
+import pdnsmanager.commonCompose.resources.Res
+import pdnsmanager.commonCompose.resources.error
+import pdnsmanager.commonCompose.resources.hide_password
+import pdnsmanager.commonCompose.resources.show_password
 
 @Composable
 fun PMCOutlinedTextField(
