@@ -38,5 +38,5 @@ jobs:
           mv ../wasmJs/* ./docs/  # Move extracted assets to /docs folder
           git add docs/  # Add the /docs folder to Git
           git commit -m "Update Wasm assets from build"
-          git push main  # Push the new branch
+          git push  # Push the new branch
 
