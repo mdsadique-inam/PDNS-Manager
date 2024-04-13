@@ -19,9 +19,15 @@ dependencyResolutionManagement {
         maven("https://maven.pkg.jetbrains.space/kotlin/p/wasm/experimental")
     }
 }
+
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version("0.8.0")
+}
+
 include(":koin-compose")
 include(":commonCompose")
 include(":launchpad")
+include(":app")
 include(":server")
 include(":pdnsClient")
 include(":shared")

@@ -23,13 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewModel.koinViewModel
-import pdnsmanager.launchpad.generated.resources.Res
-import pdnsmanager.launchpad.generated.resources.dont_have_an_account_create_one
-import pdnsmanager.launchpad.generated.resources.icon_warning
-import pdnsmanager.launchpad.generated.resources.login
-import pdnsmanager.launchpad.generated.resources.login_to_powerdns_manager
-import pdnsmanager.launchpad.generated.resources.password
-import pdnsmanager.launchpad.generated.resources.username_or_email
+import pdnsmanager.commonCompose.resources.Res
+import pdnsmanager.commonCompose.resources.dont_have_an_account_create_one
+import pdnsmanager.commonCompose.resources.icon_warning
+import pdnsmanager.commonCompose.resources.login
+import pdnsmanager.commonCompose.resources.login_to_powerdns_manager
+import pdnsmanager.commonCompose.resources.password
+import pdnsmanager.commonCompose.resources.username_or_email
 import ui.components.PMCButton
 import ui.components.PMCOutlinedTextField
 import ui.components.PMCPasswordTextField
@@ -66,7 +66,11 @@ fun LoginScreen(
 							horizontalArrangement = Arrangement.Center,
 							verticalAlignment = Alignment.CenterVertically
 						) {
-							Icon(Icons.Filled.Warning, contentDescription = stringResource(Res.string.icon_warning), tint = MaterialTheme.colorScheme.error)
+							Icon(
+								Icons.Filled.Warning,
+								contentDescription = stringResource(Res.string.icon_warning),
+								tint = MaterialTheme.colorScheme.error
+							)
 							Spacer(modifier = Modifier.width(5.dp))
 							Text(
 								text = uiState.error ?: "",
@@ -103,10 +107,9 @@ fun LoginScreen(
 
 				Spacer(modifier = Modifier.height(15.dp))
 				PMCTextButton(
+					text = stringResource(Res.string.dont_have_an_account_create_one),
 					onClick = navigateToRegister,
-				) {
-					Text(stringResource(Res.string.dont_have_an_account_create_one))
-				}
+				)
 			}
 		}
 	}

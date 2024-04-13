@@ -29,9 +29,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import org.jetbrains.compose.resources.stringResource
-import pdnsmanager.commoncompose.generated.resources.Res
-import pdnsmanager.commoncompose.generated.resources.hide_password
-import pdnsmanager.commoncompose.generated.resources.show_password
+import pdnsmanager.commonCompose.resources.Res
+import pdnsmanager.commonCompose.resources.error
+import pdnsmanager.commonCompose.resources.hide_password
+import pdnsmanager.commonCompose.resources.show_password
 
 @Composable
 fun PMCOutlinedTextField(
@@ -74,7 +75,7 @@ fun PMCOutlinedTextField(
 				verticalAlignment = Alignment.CenterVertically
 			) {
 				if (isError) {
-					Icon(Icons.Filled.Error, "error", tint = MaterialTheme.colorScheme.error)
+					Icon(Icons.Filled.Error, stringResource(Res.string.error), tint = MaterialTheme.colorScheme.error)
 				}
 				trailingIcon?.invoke()
 			}

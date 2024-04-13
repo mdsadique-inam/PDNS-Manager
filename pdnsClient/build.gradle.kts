@@ -6,6 +6,10 @@ plugins {
 }
 
 kotlin {
+    jvmToolchain {
+        languageVersion = JavaLanguageVersion.of(JavaVersion.valueOf(libs.versions.java.get()).toString())
+        vendor = JvmVendorSpec.AZUL
+    }
     jvm()
     @OptIn(ExperimentalWasmDsl::class) wasmJs {
         browser()

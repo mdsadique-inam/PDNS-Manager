@@ -23,16 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewModel.koinViewModel
-import pdnsmanager.launchpad.generated.resources.Res
-import pdnsmanager.launchpad.generated.resources.already_have_an_account_login
-import pdnsmanager.launchpad.generated.resources.confirm_password
-import pdnsmanager.launchpad.generated.resources.create_an_account_in_powerdns_manager
-import pdnsmanager.launchpad.generated.resources.email
-import pdnsmanager.launchpad.generated.resources.full_name
-import pdnsmanager.launchpad.generated.resources.icon_warning
-import pdnsmanager.launchpad.generated.resources.password
-import pdnsmanager.launchpad.generated.resources.signup
-import pdnsmanager.launchpad.generated.resources.username
+import pdnsmanager.commonCompose.resources.Res
+import pdnsmanager.commonCompose.resources.already_have_an_account_login
+import pdnsmanager.commonCompose.resources.confirm_password
+import pdnsmanager.commonCompose.resources.create_an_account_in_powerdns_manager
+import pdnsmanager.commonCompose.resources.email
+import pdnsmanager.commonCompose.resources.full_name
+import pdnsmanager.commonCompose.resources.icon_warning
+import pdnsmanager.commonCompose.resources.password
+import pdnsmanager.commonCompose.resources.signup
+import pdnsmanager.commonCompose.resources.username
 import ui.components.PMCButton
 import ui.components.PMCOutlinedTextField
 import ui.components.PMCPasswordTextField
@@ -131,10 +131,9 @@ fun RegisterScreen(
 
 				Spacer(modifier = Modifier.height(15.dp))
 				PMCTextButton(
+					text = stringResource(Res.string.already_have_an_account_login),
 					onClick = navigateToLogin,
-				) {
-					Text(stringResource(Res.string.already_have_an_account_login))
-				}
+				)
 			}
 		}
 	}
