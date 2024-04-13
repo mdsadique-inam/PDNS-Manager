@@ -21,6 +21,7 @@ jobs:
           # Assuming launchpad/build/dist/wasmJs/productionExecutable exists after build
           mkdir -p ./wasmJs  # Create a folder to store extracted assets locally
           cp -r launchpad/build/dist/wasmJs/productionExecutable/* ./wasmJs/
+          cp -r commonCompose/build/processedResources/wasmJs/values/* ./wasmJs/values/
 
       - name: Checkout Destination Repo (shallow clone)
         uses: actions/checkout@v4  # Checkout the destination repository (shallow clone)
@@ -38,5 +39,5 @@ jobs:
           mv ../wasmJs/* ./docs/  # Move extracted assets to /docs folder
           git add docs/  # Add the /docs folder to Git
           git commit -m "Update Wasm assets from build"
-          git push  # Push the new branch
+          git push
 
