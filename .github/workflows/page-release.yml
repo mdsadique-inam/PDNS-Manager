@@ -36,6 +36,7 @@ jobs:
         run: |
           git config user.name "md sadique inam"  # Replace with your name
           git config user.email "md.sadique32@gmail.com"  # Replace with your email
+          rm -rf ./docs/* # empty the folder before moving to prevent file/folder already exists
           mv ../wasmJs/* ./docs/  # Move extracted assets to /docs folder
           git add docs/  # Add the /docs folder to Git
           git commit -m "Update Wasm assets from build"
