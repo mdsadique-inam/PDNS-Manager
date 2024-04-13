@@ -16,7 +16,7 @@ application {
 
 kotlin {
     jvmToolchain {
-        languageVersion = JavaLanguageVersion.of(JavaVersion.VERSION_20.toString())
+        languageVersion = JavaLanguageVersion.of(JavaVersion.valueOf(libs.versions.java.get()).toString())
         vendor = JvmVendorSpec.AZUL
     }
 }
@@ -42,3 +42,10 @@ dependencies {
     testImplementation(libs.koin.test.junit)
 }
 
+ktor {
+    docker {
+        jreVersion.set(JavaVersion.valueOf(libs.versions.java.get()))
+        localImageName.set("pdns-webserver")
+        imageTag.set("0.0.1-preview")
+    }
+}

@@ -18,7 +18,3 @@ fun getConnectedNetworkIPv6(): String? {
 
     return null
 }
-
-fun main() {
-    println(getConnectedNetworkIPv6())
-}
