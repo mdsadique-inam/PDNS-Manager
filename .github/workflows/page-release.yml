@@ -28,10 +28,12 @@ jobs:
           repository: mdsadique-inam/launchpad
           token: ${{ secrets.PUSH_TOKEN }}  # Use a secret for access token
           fetch-depth: 1  # Only download the latest commit for efficiency
+          submodule: true
 
       - name: Push Wasm Assets to /docs
         run: |
-          ls -l ../PDNS-Manager
+          ls -l
+          ls -l ..
           git config user.name "md sadique inam"  # Replace with your name
           git config user.email "md.sadique32@gmail.com"  # Replace with your email
           mv ../PDNS-Manager/wasmJs/* ./docs/  # Move extracted assets to /docs folder
