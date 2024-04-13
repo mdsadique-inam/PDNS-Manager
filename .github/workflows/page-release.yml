@@ -32,11 +32,10 @@ jobs:
 
       - name: Push Wasm Assets to /docs
         run: |
-          git config user.name "mdsadique-inam"  # Replace with your name
+          git config user.name "md sadique inam"  # Replace with your name
           git config user.email "md.sadique32@gmail.com"  # Replace with your email
-          git checkout -b main  # Create a new branch (replace with desired branch)
           mv ./wasmJs/* ./docs/  # Move extracted assets to /docs folder
           git add docs/  # Add the /docs folder to Git
           git commit -m "Update Wasm assets from build"
-          git push origin main  # Push the new branch
+          git push main  # Push the new branch
 
