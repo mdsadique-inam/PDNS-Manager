@@ -31,7 +31,7 @@ jobs:
 
       - name: Push Wasm Assets to /docs
         run: |
-          ls -l ..
+          ls -l ../PDNS-Manager
           git config user.name "md sadique inam"  # Replace with your name
           git config user.email "md.sadique32@gmail.com"  # Replace with your email
           mv ../PDNS-Manager/wasmJs/* ./docs/  # Move extracted assets to /docs folder
