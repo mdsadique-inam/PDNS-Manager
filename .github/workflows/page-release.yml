@@ -1,6 +1,9 @@
 name: Build and Push Wasm Assets
 
 on:
+  push:
+    branches:
+      - main
   release:
     types: [published]
 
@@ -22,7 +25,7 @@ jobs:
       - name: Checkout Destination Repo (shallow clone)
         uses: actions/checkout@v4  # Checkout the destination repository (shallow clone)
         with:
-          repository: https://github.com/mdsadique-inam/launchpad
+          repository: mdsadique-inam/launchpad
           ref: main  # Adjust branch if needed
           token: ${{ secrets.PUSH_TOKEN }}  # Use a secret for access token
           fetch-depth: 1  # Only download the latest commit for efficiency
