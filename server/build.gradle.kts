@@ -25,7 +25,7 @@ dependencies {
     implementation(projects.shared)
     implementation(projects.pdnsClient)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.logback)
+    runtimeOnly(libs.logback)
     implementation(libs.bundles.ktor.server)
     implementation(libs.bundles.koin.ktor)
     add("ksp", libs.koin.ksp)
@@ -44,11 +44,7 @@ dependencies {
 
 ktor {
     docker {
-        jib {
-            from {
-                image = "eclipse-temurin:21-jre-alpine"
-            }
-        }
+        jib.from.image = "eclipse-temurin:21-jre-alpine"
         jreVersion.set(JavaVersion.valueOf(libs.versions.java.get()))
         localImageName.set("pdns-webserver")
         imageTag.set("0.0.1-preview")
