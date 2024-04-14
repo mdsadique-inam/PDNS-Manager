@@ -72,3 +72,18 @@ kotlin {
 compose.experimental {
     web.application {}
 }
+
+val copyResources by tasks.register<Copy>("copyResources") {
+    from("${rootProject.projectDir}/commonCompose/src/commonMain/composeResources")
+    into("${projectDir}/src/commonMain/composeResources")
+}
+
+tasks.named("convertXmlValueResourcesForCommonMain").configure {
+    dependsOn(copyResources.path)
+}
+
+tasks.all {
+    if (path != copyResources.path) {
+        mustRunAfter(copyResources.path)
+    }
+}

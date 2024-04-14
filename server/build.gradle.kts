@@ -25,7 +25,7 @@ dependencies {
     implementation(projects.shared)
     implementation(projects.pdnsClient)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.logback)
+    runtimeOnly(libs.logback)
     implementation(libs.bundles.ktor.server)
     implementation(libs.bundles.koin.ktor)
     add("ksp", libs.koin.ksp)

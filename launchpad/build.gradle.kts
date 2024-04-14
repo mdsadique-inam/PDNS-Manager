@@ -22,12 +22,7 @@ kotlin {
                         add(project.projectDir.path + "/wasmJsMain/")
                     }
                     proxy = (proxy ?: mutableMapOf()).apply {
-                        put("/api", mapOf(
-                            "target" to "http://localhost:8000",
-                            "pathRewrite" to mapOf(
-                                "/api" to ""
-                            )
-                        ))
+                        put("/api", "http://localhost:8000")
                     }
                 }
             }
@@ -40,6 +35,7 @@ kotlin {
             languageSettings {
                 optIn("androidx.compose.material3.ExperimentalMaterial3Api")
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+                optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
             }
         }
 
@@ -51,6 +47,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(compose.components.resources)
             implementation(compose.materialIconsExtended)
+            implementation(libs.material3.windowSizeClass)
             implementation(projects.commonCompose)
             implementation(projects.shared)
             implementation(projects.pdnsClient)
@@ -71,4 +68,19 @@ kotlin {
 
 compose.experimental {
     web.application {}
+}
+
+val copyResources by tasks.register<Copy>("copyResources") {
+    from("${rootProject.projectDir}/commonCompose/src/commonMain/composeResources")
+    into("${projectDir}/src/commonMain/composeResources")
+}
+
+tasks.named("convertXmlValueResourcesForCommonMain").configure {
+    dependsOn(copyResources.path)
+}
+
+tasks.all {
+    if (path != copyResources.path) {
+        mustRunAfter(copyResources.path)
+    }
 }

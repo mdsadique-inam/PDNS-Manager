@@ -1,9 +1,6 @@
 name: Build and Push Wasm Assets
 
 on:
-  push:
-    branches:
-      - main
   release:
     types: [published]
 

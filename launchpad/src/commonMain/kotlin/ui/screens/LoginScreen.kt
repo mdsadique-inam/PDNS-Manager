@@ -51,7 +51,8 @@ fun LoginScreen(
 				modifier = Modifier.padding(horizontal = 80.dp, vertical = 60.dp),
 			) {
 				Column(
-					horizontalAlignment = Alignment.CenterHorizontally
+					horizontalAlignment = Alignment.CenterHorizontally,
+					verticalArrangement = Arrangement.spacedBy(10.dp)
 				) {
 					Text(
 						stringResource(Res.string.login_to_powerdns_manager),
@@ -87,7 +88,7 @@ fun LoginScreen(
 						label = { Text(stringResource(Res.string.username_or_email)) },
 						isError = uiState.isError
 					)
-					Spacer(modifier = Modifier.height(10.dp))
+
 					PMCPasswordTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.password,
@@ -95,7 +96,7 @@ fun LoginScreen(
 						label = { Text(stringResource(Res.string.password)) },
 						isError = uiState.isError
 					)
-					Spacer(modifier = Modifier.height(10.dp))
+
 					PMCButton(
 						onClick = { viewModel.login() },
 						enabled = !uiState.isLoading,
