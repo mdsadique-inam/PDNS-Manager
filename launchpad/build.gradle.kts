@@ -40,6 +40,7 @@ kotlin {
             languageSettings {
                 optIn("androidx.compose.material3.ExperimentalMaterial3Api")
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+                optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
             }
         }
 
@@ -51,6 +52,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(compose.components.resources)
             implementation(compose.materialIconsExtended)
+            implementation(libs.material3.windowSizeClass)
             implementation(projects.commonCompose)
             implementation(projects.shared)
             implementation(projects.pdnsClient)

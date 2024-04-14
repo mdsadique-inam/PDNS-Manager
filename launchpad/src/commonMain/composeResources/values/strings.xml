@@ -1,3 +1,19 @@
 <resources>
-
+    <string name="error">Error</string>
+    <string name="login">Login</string>
+    <string name="login_to_powerdns_manager">Login to PowerDNS manager</string>
+    <string name="register">Register</string>
+    <string name="create_an_account_in_powerdns_manager">Create an account in PowerDNS manager</string>
+    <string name="icon_warning">Icon warning</string>
+    <string name="show_password">Show Password</string>
+    <string name="hide_password">Hide Password</string>
+    <string name="dont_have_an_account_create_one">Don't have an account? Create one</string>
+    <string name="signup">Sign Up</string>
+    <string name="full_name">Full Name</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="username_or_email">Username / Email</string>
+    <string name="already_have_an_account_login">Already have an account? Login</string>
 </resources>

@@ -9,10 +9,12 @@ import mdsadiqueinam.github.io.routes.zones
 
 fun Application.configureRouting() {
     routing {
-        authentication()
-        authenticate(AuthenticationType.SESSION, AuthenticationType.JWT) {
-            users()
-            zones()
+        route("/api") {
+            authentication()
+            authenticate(AuthenticationType.SESSION, AuthenticationType.JWT) {
+                users()
+                zones()
+            }
         }
     }
 }
