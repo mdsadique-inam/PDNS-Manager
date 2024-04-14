@@ -22,12 +22,7 @@ kotlin {
                         add(project.projectDir.path + "/wasmJsMain/")
                     }
                     proxy = (proxy ?: mutableMapOf()).apply {
-                        put("/api", mapOf(
-                            "target" to "http://localhost:8000",
-                            "pathRewrite" to mapOf(
-                                "/api" to ""
-                            )
-                        ))
+                        put("/api", "http://localhost:8000")
                     }
                 }
             }

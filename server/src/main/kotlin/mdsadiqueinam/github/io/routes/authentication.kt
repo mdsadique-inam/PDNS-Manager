@@ -25,6 +25,7 @@ fun Route.authentication() {
 		call.respond(ApiResponse.Success(response, "User registered successfully"))
 	}
 	post<Login> {
+		println("Login")
 		val body = call.receive<LoginBody>()
 		val response = authenticationRepository.attempt(body.uid, body.password)
 		call.sessions.set(UserSession(response.token))
