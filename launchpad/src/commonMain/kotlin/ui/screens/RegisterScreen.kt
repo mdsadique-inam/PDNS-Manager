@@ -54,7 +54,8 @@ fun RegisterScreen(
 				modifier = Modifier.padding(horizontal = 80.dp, vertical = 60.dp),
 			) {
 				Column(
-					horizontalAlignment = Alignment.CenterHorizontally
+					horizontalAlignment = Alignment.CenterHorizontally,
+					verticalArrangement = Arrangement.spacedBy(10.dp)
 				) {
 					Text(
 						stringResource(Res.string.create_an_account_in_powerdns_manager),
@@ -85,7 +86,7 @@ fun RegisterScreen(
 						label = { Text(stringResource(Res.string.full_name)) },
 						error = uiState.nameErrors?.get(0),
 					)
-					Spacer(modifier = Modifier.height(10.dp))
+
 					PMCOutlinedTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.username,
@@ -93,7 +94,7 @@ fun RegisterScreen(
 						label = { Text(stringResource(Res.string.username)) },
 						error = uiState.usernameErrors?.get(0),
 					)
-					Spacer(modifier = Modifier.height(10.dp))
+
 					PMCOutlinedTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.email,
@@ -101,7 +102,7 @@ fun RegisterScreen(
 						label = { Text(stringResource(Res.string.email)) },
 						error = uiState.emailErrors?.get(0),
 					)
-					Spacer(modifier = Modifier.height(10.dp))
+
 					PMCPasswordTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.password,
@@ -109,7 +110,7 @@ fun RegisterScreen(
 						label = { Text(stringResource(Res.string.password)) },
 						error = uiState.passwordErrors?.get(0),
 					)
-					Spacer(modifier = Modifier.height(10.dp))
+
 					PMCPasswordTextField(
 						modifier = Modifier.width(340.dp),
 						value = uiState.confirmPassword,
@@ -117,8 +118,6 @@ fun RegisterScreen(
 						label = { Text(stringResource(Res.string.confirm_password)) },
 						error = uiState.confirmPasswordErrors?.get(0),
 					)
-					Spacer(modifier = Modifier.height(10.dp))
-
 
 					PMCButton(
 						onClick = { viewModel.register() },
