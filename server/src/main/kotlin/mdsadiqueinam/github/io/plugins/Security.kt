@@ -25,17 +25,25 @@ object AuthenticationType {
 }
 
 class UserPrincipal(payload: Payload, val user: User) : Principal, JWTPayloadHolder(payload)
-data class UserSession(val token: String) : Principal
+data class UserSession(val token: String) : Principal {
+    companion object {
+        val name = "__User-Session"
+    }
+}
 
 fun Application.configureSecurity() {
     install(Sessions) {
         val secretEncryptKey = hex("00112233445566778899aabbccddeeff")
         val secretSignKey = hex("6819b57a326945c1968f45236589")
-        cookie<UserSession>("user_session") {
+        cookie<UserSession>(UserSession.name) {
             cookie.path = "/"
             cookie.maxAgeInSeconds = 60 * 60 * 24
             cookie.httpOnly = true
             cookie.secure = true
+            cookie.extensions.apply {
+                set("SameSite", "None")
+                set("Partitioned", "true")
+            }
             transform(SessionTransportTransformerEncrypt(secretEncryptKey, secretSignKey))
         }
     }

@@ -44,6 +44,11 @@ dependencies {
 
 ktor {
     docker {
+        jib {
+            from {
+                image = "eclipse-temurin:21-jre-alpine"
+            }
+        }
         jreVersion.set(JavaVersion.valueOf(libs.versions.java.get()))
         localImageName.set("pdns-webserver")
         imageTag.set("0.0.1-preview")

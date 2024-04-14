@@ -1,5 +1,5 @@
 [versions]
-java = "VERSION_17"
+java = "VERSION_21"
 agp = "8.2.0"
 compose = "1.6.10-dev1580"
 androidx = "2.8.0-dev1580"
