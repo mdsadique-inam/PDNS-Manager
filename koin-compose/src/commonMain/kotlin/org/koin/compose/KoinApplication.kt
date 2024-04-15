@@ -135,6 +135,7 @@ fun KoinApplication(
  *
  * @author Arnaud Giuliani
  */
+@OptIn(KoinInternalApi::class)
 @Composable
 fun KoinContext(
     context: Koin = KoinPlatform.getKoin(),
