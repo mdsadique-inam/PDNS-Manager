@@ -21,9 +21,9 @@ kotlin {
                         add(project.projectDir.path + "/commonMain/")
                         add(project.projectDir.path + "/wasmJsMain/")
                     }
-                    proxy = (proxy ?: mutableMapOf()).apply {
-                        put("/api", "http://localhost:8000")
-                    }
+//                    proxy = (proxy ?: mutableMapOf()).apply {
+//                        put("/api", "http://localhost:8000")
+//                    }
                 }
             }
         }
