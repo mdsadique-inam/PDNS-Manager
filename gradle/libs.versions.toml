@@ -1,10 +1,10 @@
 [versions]
-java = "VERSION_21"
+java = "VERSION_17"
 agp = "8.2.0"
 compose = "1.6.10-dev1580"
 androidx = "2.8.0-dev1580"
 junit = "4.13.2"
-kotlin = "1.9.23"
+kotlin = "2.0.0-RC1"
 kotlinx-serialization = "1.6.3"
 coroutines = "1.8.0"
 ktor = "2.3.10"
@@ -16,13 +16,14 @@ ehcache = "3.10.8"
 logback = "1.4.14"
 koin = "3.6.0-wasm-alpha2"
 koin-ksp = "1.3.1"
-ksp = "1.9.23-1.0.19"
+ksp = "2.0.0-RC1-1.0.20"
 napier = "2.7.1"
 kotlinx-datetime = "0.5.0"
 spring = "6.2.1"
 compottie = "1.1.1"
 commons-logging = "1.3.0"
 bouncycastle = "1.70"
+windowSizeClass = "0.5.0"
 
 [libraries]
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
@@ -44,6 +45,7 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
 spring-security-crypto = { module = "org.springframework.security:spring-security-crypto", version.ref = "spring" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+material3-windowSizeClass = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "windowSizeClass" }
 
 # Ktor client
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
