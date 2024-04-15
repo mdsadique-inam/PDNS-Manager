@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+@file:Suppress("TYPEALIAS_EXPANSION_DEPRECATION")
 @file:OptIn(KoinInternalApi::class)
 
 package org.koin.compose
@@ -106,7 +106,6 @@ private fun Koin.warnNoContext() {
  * @author Arnaud Giuliani
  */
 @Composable
-@Suppress("DEPRECATED")
 @Throws(ApplicationAlreadyStartedException::class)
 fun KoinApplication(
     application: KoinAppDeclaration,

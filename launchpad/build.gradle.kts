@@ -21,9 +21,9 @@ kotlin {
                         add(project.projectDir.path + "/commonMain/")
                         add(project.projectDir.path + "/wasmJsMain/")
                     }
-                    proxy = (proxy ?: mutableMapOf()).apply {
-                        put("/api", "http://localhost:8000")
-                    }
+//                    proxy = (proxy ?: mutableMapOf()).apply {
+//                        put("/api", "http://localhost:8000")
+//                    }
                 }
             }
         }
@@ -70,17 +70,18 @@ compose.experimental {
     web.application {}
 }
 
-val copyResources by tasks.register<Copy>("copyResources") {
-    from("${rootProject.projectDir}/commonCompose/src/commonMain/composeResources")
-    into("${projectDir}/src/commonMain/composeResources")
-}
-
-tasks.named("convertXmlValueResourcesForCommonMain").configure {
-    dependsOn(copyResources.path)
-}
-
-tasks.all {
-    if (path != copyResources.path) {
-        mustRunAfter(copyResources.path)
-    }
-}
+// task to copy resources before build
+//val copyResources by tasks.register<Copy>("copyResources") {
+//    from("${rootProject.projectDir}/commonCompose/src/commonMain/composeResources")
+//    into("${projectDir}/src/commonMain/composeResources")
+//}
+//
+//tasks.named("wasmJsBrowserProductionWebpack").configure {
+//    dependsOn(copyResources.path)
+//}
+//
+//tasks.all {
+//    if (path != copyResources.path) {
+//        mustRunAfter(copyResources.path)
+//    }
+//}
