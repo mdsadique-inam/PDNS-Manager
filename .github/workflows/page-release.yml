@@ -11,14 +11,13 @@ jobs:
       - uses: actions/checkout@v4  # Checkout the source code
 
       - name: Run Gradle Build
-        run: ./gradlew :launchpad:wasmJsBrowserProductionWebpack
+        run: ./gradlew :launchpad:wasmJsBrowserDistribution
 
       - name: Extract Wasm Assets
         run: |
           # Assuming launchpad/build/dist/wasmJs/productionExecutable exists after build
           mkdir -p ./wasmJs  # Create a folder to store extracted assets locally
           cp -r launchpad/build/dist/wasmJs/productionExecutable/* ./wasmJs/
-          cp -r commonCompose/build/processedResources/wasmJs/main/values/* ./wasmJs/values/
 
       - name: Checkout Destination Repo (shallow clone)
         uses: actions/checkout@v4  # Checkout the destination repository (shallow clone)
